@@ -62,3 +62,7 @@
 
   Prefiero este tipo de aprendizaje, guiado paso a paso, ya que me permite ir identificando como funciona el programa y ganar confianza poco a poco para finalmente poder desarrollar un ejercicio sola, ya habiando logrado resolver un ejemplo guiado en el cual basarme para aclarar mis dudas sobre como debe funcionar el programa.
 
+### Actividad 08:
+
+### Actividad 09:
+
