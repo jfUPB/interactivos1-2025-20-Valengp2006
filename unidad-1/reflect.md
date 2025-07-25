@@ -69,7 +69,9 @@
 - Concéntrate en la Actividad 06: control de movimiento con micro:bit de tu compañero. Lee su código (Python y JavaScript).
 - Tu compañero resolvió el problema de manera diferente a ti, qué hizo diferente, qué aprendiste de su solución. En tu bitácora documenta lo anterior y escribe, como si le estuvieras explicando, lo que tú hiciste y por qué es diferente a lo que hizo tu compañero.
 
+[Enlace a la bitácora de mi compañero](https://github.com/jfUPB/interactivos1-2025-20-pinwinasio480/blob/unidad1/apply/unidad-1/apply.md)
 
+A diferencia de como resolvió la *Actividad 06* mi compañero, yo utilicé un enfoque distinto al momento de definir la variable que permite el movimiento horizontal de a elipse, especificamente elgiendo un nombre diferente para la variable encargada de controlar la posición inicial y asignándole un valor inicial distinto. Esto refleja una forma ligeramente alternativa de abordar el mismo problema escribiendo e código según el estilo y comprensión de cada uno.
 
 ### Actividad 09:
 
