@@ -64,5 +64,32 @@
 
 ### Actividad 08:
 
+- Encuentra un compañero de trabajo.
+- Intercambien las URLs de sus bitácoras de aprendizaje.
+- Concéntrate en la Actividad 06: control de movimiento con micro:bit de tu compañero. Lee su código (Python y JavaScript).
+- Tu compañero resolvió el problema de manera diferente a ti, qué hizo diferente, qué aprendiste de su solución. En tu bitácora documenta lo anterior y escribe, como si le estuvieras explicando, lo que tú hiciste y por qué es diferente a lo que hizo tu compañero.
+
+
+
 ### Actividad 09:
+
+**1) Continuar: ¿Qué actividad, video o ejemplo de esta unidad te resultó más inspirador o te ayudó más a entender el potencial de los sistemas físicos interactivos?**
+
+  El video de esta unidad que me resultó más inspirador y me ayudó a entender mejor el potencial de los sistemas físicos interactivos, fue el video en el que se mostró una sala interactiva en la que, a través de los movimientos de la artista sobre una máquina, iban apareciendo nuevos patrones proyectados en la sala de diferentes formas y colores.
+
+**2) Dejar de hacer: ¿Hubo alguna parte que te pareció demasiado abstracta, muy rápida o confusa? ¿Hay algo que crees que podríamos cambiar para que sea más claro?**
+
+  La parte de aplicación práctica de los visto me parecio ago confusa y dificil de entender, principalmente debido también a que al haber tenido que ver la clase de forma virtual durante una semana uno varias cosas que no pude hacer, como la primera vez que se conectó el micro:bit al computador, ya que no contaba con los materiales en el momento, por lo que tardé más en ese proceso cuando retome clases de forma presencial y comencé a hacer las actividades.
+
+**3) Empezar a hacer: ¿Qué te genera más curiosidad ahora? ¿Te gustaría explorar más sensores del micro:bit (luz, temperatura), crear visualizaciones más complejas en p5.js o ver más ejemplos de proyectos artísticos?**
+
+  Me genera más curiosidad ahora el ver más ejemplos de proyectos artísticos, ya que en ese aspecto soy más visual, por lo que me interesa poder ver que otros proyectos existen sobre el tema.
+
+**4) Balance inspiración vs. técnica: ¿Cómo sentiste el equilibrio entre ver los videos inspiradores de la Actividad 01 y la parte técnica de conectar las herramientas en las actividades 03-06?**
+
+  Ver los videos inspiradores de la *Actividad 01* me permitió ver un poco sobre lo que podría llegar a hacer al momento de aplicarlo en a parte técnica durante las *Actividades 03-06*, sin embargo el choque siempre fue algo grande al descubrir que no es tan sencillo como parece, pero es algo que se logrará a través de la práctica.
+
+**5) Comentario adicional: ¿Hay algo más que quieras compartir sobre tu experiencia en esta unidad introductoria?**
+
+  No tengo más comentarios sobre mi experiencia en esta unidad introductoria.
 
