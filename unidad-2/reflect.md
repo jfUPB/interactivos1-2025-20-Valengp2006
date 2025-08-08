@@ -49,6 +49,10 @@ Creo que podría aplicar el patrón de máquina de estados en un proyecto como u
 - Analiza de manera crítica el diseño y la implementación de tu compañero y deja un comentario de retroalimentación específico y constructivo.
 - Conversa con tu compañero sobre su diseño y código, y discutan sus comentarios.
 
+[Enlace a la bitácora de mi compañero](https://github.com/jfUPB/interactivos1-2025-20-pinwinasio480/blob/unidad2/apply/unidad-2/apply.md)
+
+**Comentario:** Mi compañero creó una máquina de estados que funciona bastante bien, con transiciones clr¿aras y una buen manejo del tiempo. También, hizo uso de vectores de prueba para probar su correcto funcionamiento; sin embargo, e podría mejorar haciendo la cuenta regresiva un poco más clara evitando código repetitivo y agregando señales especiales al llegar o los límetes o reiniciar la bomba, los cuales agregan un poco más de estética a su bomba temporizada.
+
 ### Actividad 08
 
 **1)Continuar: ¿Qué actividad, explicación o ejemplo de esta unidad te ayudó más a entender el poder de las máquinas de estados? ¿Qué elemento consideras que es indispensable y debería mantener?**
@@ -70,4 +74,5 @@ Creo que podría aplicar el patrón de máquina de estados en un proyecto como u
 **5)Comentario adicional: ¿Hay algo más que te gustaría compartir sobre tu proceso de aprendizaje en esta unidad? ¿Algún momento de frustración o de “¡Aha!” que quieras destacar?**
 
   La parte del diagrama de estados fue lo más frustrante para mi, más aún que el programar en sí, ya que no tenía muy claro que debia poner en cada cosa, ni como debia organizar el diagrama como tal, por lo que su diseño me costó demasiado.
+
 
