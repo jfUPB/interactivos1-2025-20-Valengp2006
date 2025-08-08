@@ -43,18 +43,31 @@ Creo que podría aplicar el patrón de máquina de estados en un proyecto como u
 
 ### Actividad 07
 
-
-
-
-
-
+- Encuentra a un compañero de trabajo.
+- Intercambien las URLs de sus bitácoras de aprendizaje.
+- Revisa con atención las entradas de tu compañero para las Actividades 04 (diagrama de la bomba) y 05 (código y pruebas).
+- Analiza de manera crítica el diseño y la implementación de tu compañero y deja un comentario de retroalimentación específico y constructivo.
+- Conversa con tu compañero sobre su diseño y código, y discutan sus comentarios.
 
 ### Actividad 08
 
-**1)Continuar:** ¿Qué actividad, explicación o ejemplo de esta unidad te ayudó más a entender el poder de las máquinas de estados? ¿Qué elemento consideras que es indispensable y debería mantener?
-Dejar de hacer: ¿Hubo algún paso o actividad que te pareció confuso, innecesariamente complicado o que aportó poco a tu aprendizaje? ¿Qué cambiarías o eliminarías?
-Empezar a hacer: ¿Qué te habría ayudado a entender mejor?
-Ritmo y dificultad: En una escala del 1 (muy fácil) al 5 (muy difícil), ¿Cómo calificarías la dificultad de pasar del análisis de un programa (Actividad 03) al diseño desde cero de uno complejo (Actividad 04 y 05)? ¿Por qué?
-Comentario adicional: ¿Hay algo más que te gustaría compartir sobre tu proceso de aprendizaje en esta unidad? ¿Algún momento de frustración o de “¡Aha!” que quieras destacar?
+**1)Continuar: ¿Qué actividad, explicación o ejemplo de esta unidad te ayudó más a entender el poder de las máquinas de estados? ¿Qué elemento consideras que es indispensable y debería mantener?**
 
+  La actividad de la bomba temporizada me ayudó más a entender el poder de las máquinas de estados, ya que mostró como su implementación puede facilitar 
+
+**2)Dejar de hacer: ¿Hubo algún paso o actividad que te pareció confuso, innecesariamente complicado o que aportó poco a tu aprendizaje? ¿Qué cambiarías o eliminarías?**
+
+  La Actividad 01 fue la que me pareció más confusa, principalmente debido a que fue el primer ejemplo visto de máquinas de estados, el cual, desde mi punto de vista, fue algo complejo de hacer.
+
+**3)Empezar a hacer: ¿Qué te habría ayudado a entender mejor?**
+
+  Para mi, me hubiera sido de mucha ayuda un poco más de contexto en la parte teórica de las máquinas de estados, esto antes de comenzar con el ejemplo aplicado del tema.
+
+**4)Ritmo y dificultad: En una escala del 1 (muy fácil) al 5 (muy difícil), ¿Cómo calificarías la dificultad de pasar del análisis de un programa (Actividad 03) al diseño desde cero de uno complejo (Actividad 04 y 05)? ¿Por qué?**
+
+  Desde mi punto de vista sería un 4 en dificultad, ya que es muy diferente el analizar un programa a tener que diseñar uno desde cero, a pesar de las explicaciones y los ejemplos dados en clase, pues al fin y al cabo hay un gran cambio al pasar de análisis a desarrollo.
+
+**5)Comentario adicional: ¿Hay algo más que te gustaría compartir sobre tu proceso de aprendizaje en esta unidad? ¿Algún momento de frustración o de “¡Aha!” que quieras destacar?**
+
+  La parte del diagrama de estados fue lo más frustrante para mi, más aún que el programar en sí, ya que no tenía muy claro que debia poner en cada cosa, ni como debia organizar el diagrama como tal, por lo que su diseño me costó demasiado.
 
