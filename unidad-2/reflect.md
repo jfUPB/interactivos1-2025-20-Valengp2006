@@ -13,7 +13,7 @@
 
 **2) Explica por qué la técnica de máquina de estados es tan útil para gestionar la “concurrencia” (atender un temporizador y botones “al mismo tiempo”) en un dispositivo con un solo hilo de ejecución como el micro:bit. ¿Qué problema soluciona en comparación con usar funciones como sleep()?**
 
-  La técnica de máquina de estados es útil para gestionar la "concurrencia" ya que no bloquea el programa, como ocurre al usar funciones como *sleep* y por tanto soluciona el problema de bloqueo, sino que permite atender múltiples eventos casi que al mismo tiempo, permitiendo que el micro:bit reaccione casi de inmediato a un evento mientras avanza la cuenta regresiva,
+  La técnica de máquina de estados es útil para gestionar la "concurrencia" ya que no bloquea el programa, como ocurre al usar funciones como `sleep` y por tanto soluciona el problema de bloqueo, sino que permite atender múltiples eventos casi que al mismo tiempo, permitiendo que el micro:bit reaccione casi de inmediato a un evento mientras avanza la cuenta regresiva,
 
 **3) Imagina que tienes que añadir una nueva funcionalidad a la bomba temporizada: si se agita (shake) el micro:bit mientras la cuenta regresiva está activa, el tiempo se reduce a la mitad. ¿Cómo modificarías tu diagrama de máquina de estados para incluir este nuevo evento y acción?**
 
@@ -74,6 +74,7 @@ Creo que podría aplicar el patrón de máquina de estados en un proyecto como u
 **5) Comentario adicional: ¿Hay algo más que te gustaría compartir sobre tu proceso de aprendizaje en esta unidad? ¿Algún momento de frustración o de “¡Aha!” que quieras destacar?**
 
   La parte del diagrama de estados fue lo más frustrante para mi, más aún que el programar en sí, ya que no tenía muy claro que debia poner en cada cosa, ni como debia organizar el diagrama como tal, por lo que su diseño me costó demasiado.
+
 
 
 
