@@ -98,7 +98,7 @@ function setup() {
     // Asigna el botón al div con ID "controls" en el HTML
     connectBtn.parent('controls');
 
-    // Estilos básicos para el botón (puedes personalizarlos en style.css)
+    // Estilos básicos para el botón
     connectBtn.style('padding', '10px 20px');
     connectBtn.style('font-size', '16px');
     connectBtn.style('border-radius', '5px');
@@ -242,6 +242,7 @@ function keyPressed() {
 ## Video
 
 [Video demostratativo](https://youtu.be/nIx9nVPlox4?si=Wn76gzjzWohzKwDI)
+
 
 
 
