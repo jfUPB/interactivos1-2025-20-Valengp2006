@@ -69,9 +69,6 @@ Código modificado:
 var segmentCount = 360; // Número inicial de segmentos
 var radius = 300;       // Radio del dibujo
 
-// Las variables para controlar los segmentos con el Botón B y A son ahora directas.
-// `segmentOptions` y `currentSegmentIndex` ya no son necesarios.
-
 // === VARIABLES DE COLOR ===
 let saturationValue = 0; // Controlado por el acelerómetro X del Micro:bit
 let brightnessValue = 0; // Controlado por el acelerómetro Y del Micro:bit
@@ -85,15 +82,8 @@ let bWasPressed = false; // Para el 'debouncing' del Botón B
 
 function setup() {
     // Crea un lienzo dinámico que ocupa la mayoría del espacio de la ventana
-    createCanvas(windowWidth * 0.9, windowHeight * 0.8);
+    createCanvas(800 , 800);
     noStroke(); // Sin bordes para las formas
-
-    // Configura el modo de color a HSB (Hue, Saturation, Brightness)
-    // El tono va de 0 a 360, la saturación de 0 a 'width' y el brillo de 0 a 'height'.
-    colorMode(HSB, 360, width, height);
-
-    // Fondo inicial (blanco con HSB)
-    background(360, 0, height); // Tono 360 (rojo/magenta), saturación 0 (sin color), brillo 'height' (blanco)
 
     // Inicializa los valores de saturación y brillo al centro
     saturationValue = width / 2;
@@ -122,8 +112,8 @@ function setup() {
 function draw() {
     // Maneja la conexión serial en cada fotograma
     handleSerialConnection();
-
-    // Dibuja el fondo en cada fotograma para limpiar el lienzo
+  
+    colorMode(HSB, 360, width, height);
     background(360, 0, height);
 
     // Calcula el paso del ángulo para los segmentos
@@ -223,9 +213,8 @@ function connectBtnClick() {
 // === MANEJO DE TECLAS (MANTIENE LA FUNCIONALIDAD ORIGINAL PARA 2, 3, 4 y 's') ===
 function keyPressed() {
     // Guarda el lienzo ÚNICAMENTE si se presiona 's' o 'S'
-    if (key == 's' || key == 'S') {
+    if (key == 's' || key == 'S') 
         saveCanvas(gd.timestamp(), 'png');
-    }
 
     // Cambia el número de segmentos según la tecla presionada
     switch (key) {
@@ -248,20 +237,12 @@ function keyPressed() {
             break;
     }
 }
-
-// === MANEJO DEL REDIMENSIONAMIENTO DE LA VENTANA ===
-function windowResized() {
-    // Solo redimensionar y dibujar el fondo si el canvas ha sido creado y las variables de p5.js están definidas
-    if (typeof width !== 'undefined' && typeof height !== 'undefined' && typeof createCanvas !== 'undefined') {
-        resizeCanvas(windowWidth * 0.9, windowHeight * 0.8);
-        background(360, 0, height); // Restablece el fondo después de redimensionar
-    }
-}
 ```
 
 ## Video
 
-[Video demostratativo](URL)
+[Video demostratativo](https://youtu.be/nIx9nVPlox4?si=Wn76gzjzWohzKwDI)
+
 
 
 
