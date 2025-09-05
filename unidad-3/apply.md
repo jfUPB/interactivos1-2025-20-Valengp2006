@@ -310,14 +310,26 @@ function keyPressed() {
 ```python
 from microbit import *
 
+display.show(Image.HAPPY)
+
+class SerialRemote:
+    def __init__(self):
+        uart.init(baudrate=115200)
+
+    def update(self):
+        if button_a.was_pressed():
+            uart.write("A\n")
+        if button_b.was_pressed():
+            uart.write("B\n")
+        if accelerometer.was_gesture("shake"):
+            uart.write(" \n")  # espacio = iniciar bomba
+        if pin_logo.is_touched():
+            uart.write("R\n")  # reiniciar bomba
+
+serialRemote = SerialRemote()
+
 while True:
-    if button_a.was_pressed():
-        uart.write("A\n")
-    if button_b.was_pressed():
-        uart.write("B\n")
-    if accelerometer.was_gesture("shake"):
-        uart.write(" \n")  # espacio = iniciar bomba
-    if pin_logo.is_touched():
-        uart.write("R\n")
+    serialRemote.update()
 ```
+
 
