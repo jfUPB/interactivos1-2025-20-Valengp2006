@@ -5,7 +5,7 @@
 
 ### Corrección Actividad 06 - 05/09/2025
 
-[Enlace a p5.js](https://editor.p5js.org/)
+[Enlace a p5.js](https://editor.p5js.org/Valengp2006/sketches/wGVQKcr-g)
 
 **Código:**
 
@@ -304,7 +304,7 @@ function keyPressed() {
 }
 ```
 
-[Enlace p5.js](https://editor.p5js.org/)
+[Enlace p5.js](https://editor.p5js.org/Valengp2006/sketches/wcEZLrrN_)
 
 **Código Micro:bit:**
 ```python
@@ -320,3 +320,4 @@ while True:
     if pin_logo.is_touched():
         uart.write("R\n")
 ```
+
