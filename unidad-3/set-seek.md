@@ -36,3 +36,4 @@
 | CONFIG | Entrada serial ‘S’ | Igual que botón S: armar bomba | ARMED |
 
 
+

@@ -143,3 +143,4 @@ function dibujarFigura(x, y, tipo, size) {
 
 ![Resultado final](https://github.com/user-attachments/assets/5cf643a9-8c3c-434f-a1e1-3caea7ac1a3d)
 
+
