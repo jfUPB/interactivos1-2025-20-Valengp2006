@@ -92,11 +92,12 @@ Lo que hace es **comparar el estado actual** con el estado anterior:
 
 Así, p5.js puede reaccionar a los cambios de los botones.
 
-5. Evidencias (capturas de pantalla)
+**5. Evidencias (capturas de pantalla)**
 
 <img width="984" height="913" alt="20250910_153157" src="https://github.com/user-attachments/assets/60cbfd1c-eadd-4d87-abf1-db5d24a6af5b" />
 
 <img width="1054" height="913" alt="20250910_153759" src="https://github.com/user-attachments/assets/e99c6248-3e15-4848-8159-d7646bb86a4c" />
+
 
 
 
