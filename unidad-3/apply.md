@@ -202,7 +202,7 @@ class BombTask {
   handleKey(tecla) {
     tecla = tecla.toUpperCase();
     if (this.estado === "inactiva") {
-      if (tecla === " ") {
+      if (tecla === "S") {
         this.estado = "armando";
         this.inicioTiempo = millis();
         this.indice = 0;
@@ -228,37 +228,42 @@ class BombTask {
   }
 }
 
-// ----------------------
-// Clase SerialTask (polling)
-// ----------------------
+// ----------------------------------------
+// Clase SerialTask (corregida para p5.webserial)
+// ----------------------------------------
 class SerialTask {
-  constructor() {
+  // <-- CAMBIO: El constructor ahora recibe el objeto puerto
+  constructor(puerto) {
+    this.port = puerto;
     this.latestData = "";
-    this.connected = false;
   }
 
+  // <-- CAMBIO: El método connect ahora usa la sintaxis de p5.webserial
   connect() {
-    webSerial.requestPort().then(() => {
-      webSerial.open({ baudrate: 115200 }).then(() => {
-        this.connected = true;
-        console.log("Micro:bit conectado ✅");
-      });
-    });
+    if (!this.port.opened()) {
+      this.port.open(115200); // <-- Puedes especificar el baudrate directamente
+      console.log("Intentando conectar micro:bit... ✅");
+    }
   }
 
+  // <-- CAMBIO: El método update ahora lee los datos como en el ejemplo
   update() {
-    if (this.connected) {
-      let inString = webSerial.readLine();
-      if (inString) {
-        this.latestData = inString.trim().toUpperCase();
-        if (typeof bomb !== "undefined") bomb.handleKey(this.latestData);
+    // Es más robusto leer hasta encontrar un salto de línea
+    let inString = this.port.readUntil('\n');
+
+    if (inString.length > 0) {
+      // trim() elimina espacios en blanco y saltos de línea
+      this.latestData = inString.trim().toUpperCase();
+      console.log("Dato recibido:", this.latestData); // Para depuración
+      if (typeof bomb !== "undefined") {
+        bomb.handleKey(this.latestData);
       }
     }
   }
 }
 
 // ----------------------
-// Clase ButtonTask (teclado)
+// Clase ButtonTask (teclado) - sin cambios
 // ----------------------
 class ButtonTask {
   constructor() {}
@@ -274,6 +279,7 @@ class ButtonTask {
 let bomb;
 let serialTask;
 let buttonTask;
+let port; // <-- CAMBIO: Variable para el objeto del puerto serial
 
 function setup() {
   createCanvas(400, 400);
@@ -281,10 +287,14 @@ function setup() {
   textSize(28);
 
   bomb = new BombTask();
-  serialTask = new SerialTask();
+  
+  // <-- CAMBIO: Inicializamos el puerto y lo pasamos al constructor de SerialTask
+  port = createSerial();
+  serialTask = new SerialTask(port);
+
   buttonTask = new ButtonTask();
 
-  // Botón de conexión al micro:bit
+  // <-- CAMBIO: El botón ahora llama al método corregido
   let connectBtn = createButton("Conectar micro:bit");
   connectBtn.position(10, 10);
   connectBtn.mousePressed(() => serialTask.connect());
@@ -292,12 +302,15 @@ function setup() {
 
 function draw() {
   bomb.update();
-  serialTask.update();
+  // Solo actualizamos la tarea serial si el puerto está abierto
+  if (port.opened()) {
+    serialTask.update();
+  }
   buttonTask.update();
 }
 
 // ----------------------
-// KeyPressed p5.js
+// KeyPressed p5.js - sin cambios
 // ----------------------
 function keyPressed() {
   if (buttonTask) buttonTask.handleKey(key);
@@ -322,7 +335,7 @@ class SerialRemote:
         if button_b.was_pressed():
             uart.write("B\n")
         if accelerometer.was_gesture("shake"):
-            uart.write(" \n")  # espacio = iniciar bomba
+            uart.write("s\n")  # espacio = iniciar bomba
         if pin_logo.is_touched():
             uart.write("R\n")  # reiniciar bomba
 
@@ -331,5 +344,6 @@ serialRemote = SerialRemote()
 while True:
     serialRemote.update()
 ```
+
 
 
