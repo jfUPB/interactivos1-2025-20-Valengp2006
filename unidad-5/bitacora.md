@@ -1,4 +1,3 @@
-
 # Evidencias de la unidad 5
 
 ## Actividad 01 - 10/09/2025
@@ -108,18 +107,49 @@ Así, p5.js puede reaccionar a los cambios de los botones.
 
 **¿Por qué se ve este resultado?**
 
-Porque al no estar escrito en código ASCII el programa no puede leerlos.
+Porque los datos que está enviando la micro:bit están en formato binario, no en texto ASCII. El programa intenta interpretarlos como caracteres de texto, pero al no corresponder a letras legibles, aparecen símbolos extraños o "basura" en pantalla.
 
-- **Recepción de datos en Todo HEX**
+- **Recepción de datos en Todo en HEX**
 
 <img width="1099" height="791" alt="Captura de pantalla 2025-09-12 142851" src="https://github.com/user-attachments/assets/d4759962-a96e-4f96-94ed-ec43ddfcf438" />
 
 **¿Por qué se ve este resultado?**
 
+Porque al activar la vista “Todo en Hex”, el programa deja de intentar interpretar los datos como texto y en su lugar muestra directamente el valor hexadecimal de cada byte recibido. Esto permite ver de forma comprensible los datos binarios que están llegando.
+
 **¿Cómo está relacionado con esta línea de código?**
 
 ```data = struct.pack('>2h2B', xValue, yValue, int(aState), int(bState))```
 
+Está relacionado porque esa línea convierte (empaqueta) los valores en un mensaje binario con el formato `>2h2B`, que significa:
+
+- 2h: dos números enteros de 2 bytes cada uno → 4 bytes
+- 2B: dos números enteros sin signo de 1 byte cada uno → 2 bytes
+- En total: 6 bytes por mensaje.
+
+Al ver los datos en hexadecimal, es posible distinguir esos 6 bytes enviados en cada transmisión.
+
 **¿Qué ventajas y desventajas ves en usar un formato binario en lugar de texto en ASCII?**
 
+- **Ventajas del binario:**
+
+  - Ocupa menos espacio (menos bytes por cada dato enviado).
+  - Se transmite más rápido, porque los mensajes son más cortos.
+  - Es más eficiente para enviar datos numéricos grandes o complejos.
+
+- **Desventajas del binario:**
+
+  - No es legible para humanos (no se pueden interpretar fácilmente a simple vista).
+  - Es necesario conocer el formato exacto (>2h2B en este caso) para poder decodificarlo correctamente.
+  - Si hay un error en el orden o el tamaño de los datos, es más difícil detectarlo que en ASCII.
+
+- **Ventajas del ASCII (texto)**
+
+  - Fácil de leer y entender por personas.
+  - No necesita un formato de decodificación específico, basta con abrir el puerto serie.
+
+- **Desventajas del ASCII**
+
+  - Ocupa más espacio que el binario (más bytes para representar el mismo número).
+  - Es más lento de transmitir.
 
