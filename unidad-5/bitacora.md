@@ -127,8 +127,6 @@ Está relacionado porque esa línea convierte (empaqueta) los valores en un mens
 - 2B: dos números enteros sin signo de 1 byte cada uno → 2 bytes
 - En total: 6 bytes por mensaje.
 
-Al ver los datos en hexadecimal, es posible distinguir esos 6 bytes enviados en cada transmisión.
-
 **¿Qué ventajas y desventajas ves en usar un formato binario en lugar de texto en ASCII?**
 
 - **Ventajas del binario:**
@@ -152,4 +150,5 @@ Al ver los datos en hexadecimal, es posible distinguir esos 6 bytes enviados en 
 
   - Ocupa más espacio que el binario (más bytes para representar el mismo número).
   - Es más lento de transmitir.
+
 
