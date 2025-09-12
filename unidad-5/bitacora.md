@@ -113,9 +113,10 @@ Porque al no estar escrito en código ASCII el programa no puede leerlos.
 - **Recepción de datos en Todo HEX**
 
 <img width="1099" height="791" alt="Captura de pantalla 2025-09-12 142851" src="https://github.com/user-attachments/assets/d4759962-a96e-4f96-94ed-ec43ddfcf438" />
+  - **¿Por qué se ve este resultado?**
 
-**¿Por qué se ve este resultado?**
-
-**¿Cómo está relacionado con esta línea de código?**
+  - **¿Cómo está relacionado con esta línea de código?**
 
 ```data = struct.pack('>2h2B', xValue, yValue, int(aState), int(bState))```
+
+  - **¿Qué ventajas y desventajas ves en usar un formato binario en lugar de texto en ASCII?**
