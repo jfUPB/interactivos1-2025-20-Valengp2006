@@ -151,7 +151,7 @@ Está relacionado porque esa línea convierte (empaqueta) los valores en un mens
   - Ocupa más espacio que el binario (más bytes para representar el mismo número).
   - Es más lento de transmitir.
 
-### En un protocolo de comunicación binario estoy enviando números enteros positivos y negativos del acelerómetro de un micro:bit. Cuando recibo el dato y lo convierto a entero, a veces obtengo valores mayores a 60000 (por ejemplo, `fb bc` → 64444), pero eso no corresponde a un valor posible del acelerómetro. ¿Por qué pasa esto y cómo puedo obtener el valor correcto?**
+### En un protocolo de comunicación binario estoy enviando números enteros positivos y negativos del acelerómetro de un micro:bit. Cuando recibo el dato y lo convierto a entero, a veces obtengo valores mayores a 60000 (por ejemplo, `fb bc` → 64444), pero eso no corresponde a un valor posible del acelerómetro. ¿Por qué pasa esto y cómo puedo obtener el valor correcto?
 
 <img width="1090" height="798" alt="Captura de pantalla 2025-09-12 152124" src="https://github.com/user-attachments/assets/fbe2fba4-3ab5-4de0-9337-90306c98b084" />
 
@@ -206,5 +206,6 @@ Los valores de `xValue` y `yValue` pueden ser positivos o negativos, y como se e
 * Si el número es **negativo**, el bit más significativo es 1 y el valor aparece como su representación en complemento a dos (por ejemplo, `-100` → `FF 9C`).
 
 Así, aunque se vea un valor “grande” en hexadecimal, en realidad corresponde a un número negativo cuando se interpreta como entero con signo.
+
 
 
