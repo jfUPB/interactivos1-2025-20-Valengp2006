@@ -151,4 +151,30 @@ Está relacionado porque esa línea convierte (empaqueta) los valores en un mens
   - Ocupa más espacio que el binario (más bytes para representar el mismo número).
   - Es más lento de transmitir.
 
+**En un protocolo de comunicación binario estoy enviando números enteros positivos y negativos del acelerómetro de un micro:bit.
+Cuando recibo el dato y lo convierto a entero, a veces obtengo valores mayores a 60000 (por ejemplo, `fb bc` → 64444), pero eso no corresponde a un valor posible del acelerómetro.
+¿Por qué pasa esto y cómo puedo obtener el valor correcto?**
+
+Esto sucede porque el programa está **interpretando un número con signo como si fuera sin signo**.
+
+El valor hexadecimal `fb bc` en binario es `1111101110111100`.
+
+- Si se interpreta como **entero sin signo (unsigned)**, su valor decimal es `64444`.
+- Pero como el dato realmente representa un **entero con signo de 16 bits (signed short)**, se usa un formato llamado **complemento a dos** para representar los números negativos.
+
+En complemento a dos:
+
+- El bit más significativo (MSB) indica el signo (0 = positivo, 1 = negativo).
+- Como en `1111101110111100` el primer bit es 1, el número es negativo.
+- Al convertirlo correctamente se obtiene:
+  - Invertir bits → `0000010001000011`
+  - Sumar 1 → `0000010001000100`
+  - Resultado en decimal → `1092`
+  - Como era negativo → `-1092`
+
+Entonces, el valor correcto de `fb bc` es **`-1092`**, lo cual sí tiene sentido como lectura del acelerómetro (en mili-g).
+
+**¿Entonces cual es la solución?:** Indicarle al programa que lea esos dos bytes como **entero con signo de 16 bits** (`signed short`). Así la computadora interpretará automáticamente el número en complemento a dos y mostrará el valor correcto (positivo o negativo).
+
+
 
