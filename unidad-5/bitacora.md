@@ -176,7 +176,35 @@ Entonces, el valor correcto de `fb bc` es **`-1092`**, lo cual sí tiene sentido
 
 **¿Entonces cual es la solución?:** Indicarle al programa que lea esos dos bytes como **entero con signo de 16 bits** (`signed short`). Así la computadora interpretará automáticamente el número en complemento a dos y mostrará el valor correcto (positivo o negativo).
 
+### Experimento: enviar solo cuando se agita
 
+- **¿Cuántos bytes se están enviando por mensaje?**
+Se están enviando **6 bytes** por cada mensaje.
 
+- **¿Cómo se relaciona esto con el formato `'>2h2B'`?**
+El formato `'>2h2B'` define exactamente cuántos bytes se envían y en qué orden:
+
+- `2h` → indica que se envían 2 números enteros cortos (de 2 bytes cada uno) → 4 bytes en total.
+- `2B` → indica que se envían 2 números enteros sin signo (de 1 byte cada uno) → 2 bytes en total.
+  **4 + 2 = 6 bytes** por mensaje.
+  
+Por eso, al observar los datos en hexadecimal, siempre aparecen grupos de 6 bytes por cada mensaje enviado.
+
+**¿Qué significa cada uno de los bytes que se envían?**
+
+* Los **primeros 2 bytes** representan el valor de `xValue` (aceleración en el eje X).
+* Los **siguientes 2 bytes** representan el valor de `yValue` (aceleración en el eje Y).
+* El **quinto byte** representa el estado de `button_a` (1 si está presionado, 0 si no).
+* El **sexto byte** representa el estado de `button_b` (1 si está presionado, 0 si no).
+
+### Valores positivos y negativos en el formato `'>2h2B'`
+
+**¿Cómo se verían esos números en el formato `'>2h2B'`?**
+Los valores de `xValue` y `yValue` pueden ser positivos o negativos, y como se envían con el tipo `h` (entero corto con signo), se representan en **complemento a dos** usando 2 bytes cada uno.
+
+* Si el número es **positivo**, el bit más significativo (MSB) es 0 y el valor en hexadecimal aparece normalmente (por ejemplo, `+100` → `00 64`).
+* Si el número es **negativo**, el bit más significativo es 1 y el valor aparece como su representación en complemento a dos (por ejemplo, `-100` → `FF 9C`).
+
+Así, aunque se vea un valor “grande” en hexadecimal, en realidad corresponde a un número negativo cuando se interpreta como entero con signo.
 
 
