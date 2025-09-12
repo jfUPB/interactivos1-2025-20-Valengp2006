@@ -184,9 +184,9 @@ Se están enviando **6 bytes** por cada mensaje.
 - **¿Cómo se relaciona esto con el formato `'>2h2B'`?**
 El formato `'>2h2B'` define exactamente cuántos bytes se envían y en qué orden:
 
-- `2h` → indica que se envían 2 números enteros cortos (de 2 bytes cada uno) → 4 bytes en total.
-- `2B` → indica que se envían 2 números enteros sin signo (de 1 byte cada uno) → 2 bytes en total.
-  **4 + 2 = 6 bytes** por mensaje.
+  - `2h` → indica que se envían 2 números enteros cortos (de 2 bytes cada uno) → 4 bytes en total.
+  - `2B` → indica que se envían 2 números enteros sin signo (de 1 byte cada uno) → 2 bytes en total.
+  - **4 + 2 = 6 bytes** por mensaje.
   
 Por eso, al observar los datos en hexadecimal, siempre aparecen grupos de 6 bytes por cada mensaje enviado.
 
@@ -206,6 +206,7 @@ Los valores de `xValue` y `yValue` pueden ser positivos o negativos, y como se e
 * Si el número es **negativo**, el bit más significativo es 1 y el valor aparece como su representación en complemento a dos (por ejemplo, `-100` → `FF 9C`).
 
 Así, aunque se vea un valor “grande” en hexadecimal, en realidad corresponde a un número negativo cuando se interpreta como entero con signo.
+
 
 
 
