@@ -101,7 +101,7 @@ Así, p5.js puede reaccionar a los cambios de los botones.
 
 ## Actividad 02 - 12/09/2025
 
-- **Recepción de datos en texto**
+### Recepción de datos en texto
 
 <img width="1097" height="796" alt="Captura de pantalla 2025-09-12 142620" src="https://github.com/user-attachments/assets/312982ac-8f4e-499b-9f57-e895d1a6ba9c" />
 
@@ -109,7 +109,7 @@ Así, p5.js puede reaccionar a los cambios de los botones.
 
 Porque los datos que está enviando la micro:bit están en formato binario, no en texto ASCII. El programa intenta interpretarlos como caracteres de texto, pero al no corresponder a letras legibles, aparecen símbolos extraños o "basura" en pantalla.
 
-- **Recepción de datos en Todo en HEX**
+### Recepción de datos en Todo en HEX
 
 <img width="1099" height="791" alt="Captura de pantalla 2025-09-12 142851" src="https://github.com/user-attachments/assets/d4759962-a96e-4f96-94ed-ec43ddfcf438" />
 
@@ -127,7 +127,7 @@ Está relacionado porque esa línea convierte (empaqueta) los valores en un mens
 - 2B: dos números enteros sin signo de 1 byte cada uno → 2 bytes
 - En total: 6 bytes por mensaje.
 
-**¿Qué ventajas y desventajas ves en usar un formato binario en lugar de texto en ASCII?**
+### ¿Qué ventajas y desventajas ves en usar un formato binario en lugar de texto en ASCII?**
 
 - **Ventajas del binario:**
 
@@ -151,9 +151,7 @@ Está relacionado porque esa línea convierte (empaqueta) los valores en un mens
   - Ocupa más espacio que el binario (más bytes para representar el mismo número).
   - Es más lento de transmitir.
 
-**En un protocolo de comunicación binario estoy enviando números enteros positivos y negativos del acelerómetro de un micro:bit.
-Cuando recibo el dato y lo convierto a entero, a veces obtengo valores mayores a 60000 (por ejemplo, `fb bc` → 64444), pero eso no corresponde a un valor posible del acelerómetro.
-¿Por qué pasa esto y cómo puedo obtener el valor correcto?**
+### En un protocolo de comunicación binario estoy enviando números enteros positivos y negativos del acelerómetro de un micro:bit. Cuando recibo el dato y lo convierto a entero, a veces obtengo valores mayores a 60000 (por ejemplo, `fb bc` → 64444), pero eso no corresponde a un valor posible del acelerómetro. ¿Por qué pasa esto y cómo puedo obtener el valor correcto?**
 
 <img width="1090" height="798" alt="Captura de pantalla 2025-09-12 152124" src="https://github.com/user-attachments/assets/fbe2fba4-3ab5-4de0-9337-90306c98b084" />
 
@@ -177,6 +175,7 @@ En complemento a dos:
 Entonces, el valor correcto de `fb bc` es **`-1092`**, lo cual sí tiene sentido como lectura del acelerómetro (en mili-g).
 
 **¿Entonces cual es la solución?:** Indicarle al programa que lea esos dos bytes como **entero con signo de 16 bits** (`signed short`). Así la computadora interpretará automáticamente el número en complemento a dos y mostrará el valor correcto (positivo o negativo).
+
 
 
 
