@@ -155,6 +155,8 @@ Está relacionado porque esa línea convierte (empaqueta) los valores en un mens
 Cuando recibo el dato y lo convierto a entero, a veces obtengo valores mayores a 60000 (por ejemplo, `fb bc` → 64444), pero eso no corresponde a un valor posible del acelerómetro.
 ¿Por qué pasa esto y cómo puedo obtener el valor correcto?**
 
+<img width="1090" height="798" alt="Captura de pantalla 2025-09-12 152124" src="https://github.com/user-attachments/assets/fbe2fba4-3ab5-4de0-9337-90306c98b084" />
+
 Esto sucede porque el programa está **interpretando un número con signo como si fuera sin signo**.
 
 El valor hexadecimal `fb bc` en binario es `1111101110111100`.
@@ -175,6 +177,7 @@ En complemento a dos:
 Entonces, el valor correcto de `fb bc` es **`-1092`**, lo cual sí tiene sentido como lectura del acelerómetro (en mili-g).
 
 **¿Entonces cual es la solución?:** Indicarle al programa que lea esos dos bytes como **entero con signo de 16 bits** (`signed short`). Así la computadora interpretará automáticamente el número en complemento a dos y mostrará el valor correcto (positivo o negativo).
+
 
 
 
