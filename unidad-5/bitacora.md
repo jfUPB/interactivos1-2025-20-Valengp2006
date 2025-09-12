@@ -100,7 +100,22 @@ Así, p5.js puede reaccionar a los cambios de los botones.
 
 <img width="1054" height="913" alt="20250910_153759" src="https://github.com/user-attachments/assets/e99c6248-3e15-4848-8159-d7646bb86a4c" />
 
+## Actividad 02 - 12/09/2025
 
+- **Recepción de datos en texto**
 
+<img width="1097" height="796" alt="Captura de pantalla 2025-09-12 142620" src="https://github.com/user-attachments/assets/312982ac-8f4e-499b-9f57-e895d1a6ba9c" />
 
+**¿Por qué se ve este resultado?**
 
+Porque al no estar escrito en código ASCII el programa no puede leerlos.
+
+- **Recepción de datos en Todo HEX**
+
+<img width="1099" height="791" alt="Captura de pantalla 2025-09-12 142851" src="https://github.com/user-attachments/assets/d4759962-a96e-4f96-94ed-ec43ddfcf438" />
+
+**¿Por qué se ve este resultado?**
+
+**¿Cómo está relacionado con esta línea de código?**
+
+```data = struct.pack('>2h2B', xValue, yValue, int(aState), int(bState))```
