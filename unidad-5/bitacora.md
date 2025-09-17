@@ -228,8 +228,6 @@ Así, aunque se vea un valor “grande” en hexadecimal, en realidad correspond
 
 ### ¿Qué diferencias ves entre los datos en ASCII y en binario? ¿Qué ventajas y desventajas ves en usar un formato binario en lugar de texto en ASCII? ¿Qué ventajas y desventajas ves en usar un formato ASCII en lugar de binario?
 
-<img width="1096" height="796" alt="Captura de pantalla 2025-09-17 144627" src="https://github.com/user-attachments/assets/e59fdd86-8f49-4be1-855d-d58085447080" />
-
 **Diferencias observadas:**
 
 - Los datos en binario aparecen como caracteres raros o símbolos no legibles en la consola, porque son bytes crudos (valores entre 0 y 255).
@@ -257,6 +255,10 @@ Así, aunque se vea un valor “grande” en hexadecimal, en realidad correspond
 - Ocupa más bytes (cada número convertido a texto puede ocupar varios caracteres).
 - Es más lento de transmitir y procesar, porque implica convertir números a texto y luego volver a números al recibirlos.
 
+#### Evidencia:
+
+<img width="1096" height="796" alt="Captura de pantalla 2025-09-17 144627" src="https://github.com/user-attachments/assets/e59fdd86-8f49-4be1-855d-d58085447080" />
+
 ## Actividad 03 - 17/09/2025
 
 ### ¿Por qué en la unidad anterior teníamos que enviar la información delimitada y además marcada con un salto de línea, y ahora no es necesario?
@@ -269,6 +271,8 @@ Por eso, era necesario:
 - Indicar el final de cada mensaje con un salto de línea \n, para que el receptor supiera que ya recibió el mensaje completo.
 
 Ahora, en cambio, los datos se envían en formato binario usando struct.pack('>2h2B'), lo que siempre genera exactamente 6 bytes por mensaje (2 + 2 + 1 + 1), así que el receptor sabe que cada paquete ocupa 6 bytes exactos. Gracias a esto no hacen falta delimitadores ni saltos de línea, porque el tamaño fijo del paquete permite al receptor dividir el flujo de datos en bloques de 6 bytes.
+
+#### Evidencia: 
 
 <img width="897" height="655" alt="Captura de pantalla 2025-09-17 145856" src="https://github.com/user-attachments/assets/5b89fa8b-410e-4833-aa05-622ff03a845e" />
 
@@ -317,3 +321,79 @@ if (port.availableBytes() >= 6) {
 - Se usa .readBytes(6) en vez de .readLine().
 - Se crea un DataView para interpretar los bytes como números binarios, no como texto.
 - Ya no hay que convertir strings a números: directamente se leen los valores binarios correctos.
+
+### ¿Qué ves en la consola? ¿Por qué crees que se produce este error?
+
+Al iniciar el programa en p5.js, en la consola aparece inmediatamente un mensaje de error del tipo Event {isTrusted: true, ...}. Aunque no estaba presionando ninguna tecla, el valor que se muestra en la consola es true. Esto indica que el evento se está activando sin que haya una interacción del usuario, lo cual sugiere que hay un error de framing en el código: probablemente el evento está siendo llamado de forma automática en lugar de esperar a que el usuario lo dispare.
+
+**¿Por qué sucede este error?**
+
+- El micro:bit está enviando datos en bloques exactos de 6 bytes (>2h2B).
+- Pero el código de p5.js lee con:
+```javascript
+if (port.availableBytes() >= 6) {
+  let data = port.readBytes(6);
+  ...
+}
+```
+Si por alguna razón el flujo serial entrega más o menos de 6 bytes de golpe (por ejemplo, 7, 8, o 11 bytes de una sola vez), el readBytes(6) puede:
+  - Leer los últimos 2 bytes del mensaje anterior + los primeros 4 del siguiente, combinándolos incorrectamente.
+
+Esto hace que getInt16 interprete bytes "mezclados" y devuelva valores basura (como 3073). Además, en el código, después de enviar los 6 bytes binarios, el micro:bit también envía texto ASCII ("ASCII:\n..."). Si esos bytes ASCII llegan antes de que se lean los binarios, p5.js podría interpretar bytes de texto como parte de los 6 bytes binarios, generando números absurdos.
+
+#### Evidencia:
+
+<img width="1737" height="818" alt="Captura de pantalla 2025-09-17 152154" src="https://github.com/user-attachments/assets/4895cb4d-56cd-43f7-8380-1a3cc3f25500" />
+
+### Analiza el código, observa los cambios. Ejecuta y luego observa la consola. ¿Qué ves?
+
+En la consola aparece que el micro:bit se conecta correctamente y luego muestra:
+
+`A pressed`
+`microBitX: 500 microBitY: 524 microBitAState: true microBitBState: false`
+
+Esto sucede apenas inicio el programa, aunque no estoy presionando ningún botón.
+Esto indica que el código está leyendo datos incorrectos, porque está interpretando como true un valor que no corresponde al estado real del botón.
+
+Creo que este error ocurre porque los 6 bytes que lee el programa no están alineados con los 6 bytes que envía el micro:bit, por lo que se produce un error de sincronización (framing) y los valores llegan desordenados o incompletos.
+
+#### Evidencia:
+
+<img width="1738" height="810" alt="Captura de pantalla 2025-09-17 153100" src="https://github.com/user-attachments/assets/f06671d8-28f3-48d9-9540-da65e252fca8" />
+
+###  ¿Qué cambios tienen los programas y ¿Qué puedes observar en la consola del editor de p5.js?
+
+**Cambios que tienen los programas:**
+
+**micro\:bit:**
+
+- Ahora empaqueta los datos en un formato binario con `struct.pack('>2h2B', ...)`, enviando 2 valores de acelerómetro (x, y) como enteros de 16 bits y 2 estados de botones como bytes individuales.
+- Se añadió un **byte de cabecera (0xAA)** al inicio de cada paquete y un **checksum (suma de los datos módulo 256)** al final, para detectar errores de sincronización.
+- Se fija una **velocidad de transmisión de 115200 baudios** y se envían datos cada 100 ms (10 Hz).
+
+**p5.js:**
+
+- Ahora usa un **buffer (`serialBuffer`)** para acumular los bytes que llegan por el puerto serie.
+- Busca el **byte de cabecera 0xAA** para alinear los paquetes y solo procesa cuando hay al menos 8 bytes disponibles.
+- Verifica el **checksum** recibido y descarta los paquetes incorrectos.
+- Se añadieron funciones para **actualizar el estado de los botones A y B**, generando eventos cuando cambian de estado.
+- Se añadió **código para dibujar imágenes SVG o líneas** cuando se presiona el botón A del micro\:bit.
+
+**Lo que se observa en la consola de p5.js:**
+
+- Aparece primero el mensaje:
+  `Connected to serial port`
+  lo que indica que la conexión serie se abrió correctamente.
+
+- Luego:
+  `Microbit ready to draw`
+  que significa que el micro\:bit comenzó a enviar datos válidos y el programa ya está en estado de dibujo.
+
+- Después se ven mensajes como:
+  `A pressed` / `B released`
+  que indican que el código detecta correctamente los cambios en el estado de los botones del micro\:bit.
+
+#### Evidencia
+
+<img width="1736" height="809" alt="Captura de pantalla 2025-09-17 153631" src="https://github.com/user-attachments/assets/f5aebda7-b57a-445f-a4d3-adf6bd6658ab" />
+
