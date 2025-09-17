@@ -179,15 +179,17 @@ Entonces, el valor correcto de `fb bc` es **`-1092`**, lo cual sí tiene sentido
 ### Experimento: enviar solo cuando se agita
 
 - **¿Cuántos bytes se están enviando por mensaje?**
+
 Se están enviando **6 bytes** por cada mensaje.
 
 - **¿Cómo se relaciona esto con el formato `'>2h2B'`?**
+
 El formato `'>2h2B'` define exactamente cuántos bytes se envían y en qué orden:
 
   - `2h` → indica que se envían 2 números enteros cortos (de 2 bytes cada uno) → 4 bytes en total.
   - `2B` → indica que se envían 2 números enteros sin signo (de 1 byte cada uno) → 2 bytes en total.
   - **4 + 2 = 6 bytes** por mensaje.
-  
+
 Por eso, al observar los datos en hexadecimal, siempre aparecen grupos de 6 bytes por cada mensaje enviado.
 
 **¿Qué significa cada uno de los bytes que se envían?**
@@ -200,12 +202,61 @@ Por eso, al observar los datos en hexadecimal, siempre aparecen grupos de 6 byte
 ### Valores positivos y negativos en el formato `'>2h2B'`
 
 **¿Cómo se verían esos números en el formato `'>2h2B'`?**
+
 Los valores de `xValue` y `yValue` pueden ser positivos o negativos, y como se envían con el tipo `h` (entero corto con signo), se representan en **complemento a dos** usando 2 bytes cada uno.
 
-* Si el número es **positivo**, el bit más significativo (MSB) es 0 y el valor en hexadecimal aparece normalmente (por ejemplo, `+100` → `00 64`).
-* Si el número es **negativo**, el bit más significativo es 1 y el valor aparece como su representación en complemento a dos (por ejemplo, `-100` → `FF 9C`).
+- Si el número es **positivo**, el bit más significativo (MSB) es 0 y el valor en hexadecimal aparece normalmente (por ejemplo, `+100` → `00 64`).
+- Si el número es **negativo**, el bit más significativo es 1 y el valor aparece como su representación en complemento a dos (por ejemplo, `-100` → `FF 9C`).
 
 Así, aunque se vea un valor “grande” en hexadecimal, en realidad corresponde a un número negativo cuando se interpreta como entero con signo.
+
+**Ejemplo:**
+
+<img width="1090" height="798" alt="Captura de pantalla 2025-09-12 152124" src="https://github.com/user-attachments/assets/fbe03246-8666-4f79-a2ab-21088d515818" />
+
+- El valor hexadecimal fb bc representa un número negativo en un formato estándar llamado complemento a dos.
+- El programa lee los bits 1111101110111100 y, al tratarlo como un número sin signo, calcula su valor directo, que es 64,444. Sin embargo, en los números con signo, el primer bit (el más a la izquierda) se usa para indicar si el número es positivo (0) o negativo (1). Como en tu caso empieza con 1, es un número negativo.
+- El valor real de fb bc (hexadecimal) corresponde a -1092 en decimal.
+- Para obtener el valor correcto, es necesario indicarle al programa que lea esos dos bytes como un entero de 16 bits con signo (en inglés, signed 16-bit integer o short). La computadora aplicará automáticamente el siguiente cálculo (conocido como "complemento a dos"):
+    - **Valor Binario:** 1111 1011 1011 1100
+    - **Invertir los bits:** 0000 0100 0100 0011
+    - **Sumar 1:** 0000 0100 0100 0100
+    - **Calcular el valor decimal:** El resultado es 1092.
+    - **Añadir el signo negativo:** Como el bit original era 1, el valor final es -1092.
+
+**En resumen:** No es un error en el envío de datos. Simplemente, es necesario asegurarse de que el programa que recibe los datos los interprete como un entero de 16 bits con signo para decodificar correctamente los números negativos.
+
+### ¿Qué diferencias ves entre los datos en ASCII y en binario? ¿Qué ventajas y desventajas ves en usar un formato binario en lugar de texto en ASCII? ¿Qué ventajas y desventajas ves en usar un formato ASCII en lugar de binario?
+
+<img width="1096" height="796" alt="Captura de pantalla 2025-09-17 144627" src="https://github.com/user-attachments/assets/e59fdd86-8f49-4be1-855d-d58085447080" />
+
+**Diferencias observadas:**
+
+- Los datos en binario aparecen como caracteres raros o símbolos no legibles en la consola, porque son bytes crudos (valores entre 0 y 255).
+- Los datos en ASCII aparecen como números legibles separados por comas, por ejemplo: `123,-45,0,1`
+- Son texto normal que representa los valores numéricos.
+
+**Ventajas del formato binario (struct.pack):**
+
+- Ocupa menos bytes (solo 6 en este caso: 2 bytes + 2 bytes + 1 byte + 1 byte).
+- Es más rápido de enviar y procesar, porque no necesita convertir los números a texto.
+- Evita errores por caracteres extra (comas, saltos de línea, etc.).
+
+**Desventajas del formato binario:**
+
+- No es legible para humanos directamente.
+- Necesitas saber exactamente el formato para poder interpretar correctamente los bytes recibidos.
+
+**Ventajas del formato ASCII:**
+
+- Es fácil de leer y depurar durante el desarrollo.
+- No necesitas conocer un formato especial, basta con separar por comas.
+
+**Desventajas del formato ASCII:**
+
+- Ocupa más bytes (cada número convertido a texto puede ocupar varios caracteres).
+- Es más lento de transmitir y procesar, porque implica convertir números a texto y luego volver a números al recibirlos.
+
 
 
 
