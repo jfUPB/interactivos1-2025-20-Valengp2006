@@ -257,7 +257,63 @@ Así, aunque se vea un valor “grande” en hexadecimal, en realidad correspond
 - Ocupa más bytes (cada número convertido a texto puede ocupar varios caracteres).
 - Es más lento de transmitir y procesar, porque implica convertir números a texto y luego volver a números al recibirlos.
 
+## Actividad 03 - 17/09/2025
 
+### ¿Por qué en la unidad anterior teníamos que enviar la información delimitada y además marcada con un salto de línea, y ahora no es necesario?
 
+En la unidad anterior, los datos se enviaban en formato ASCII (texto), donde cada valor numérico era convertido en caracteres (por ejemplo "500,524,1,0\n"). Como el tamaño de cada mensaje podía variar (algunos números tienen 1 dígito, otros 3 o más), el receptor no podía saber dónde terminaba un mensaje y empezaba el siguiente.
 
+Por eso, era necesario:
 
+- Separar los valores con delimitadores (como comas ,) para poder distinguirlos.
+- Indicar el final de cada mensaje con un salto de línea \n, para que el receptor supiera que ya recibió el mensaje completo.
+
+Ahora, en cambio, los datos se envían en formato binario usando struct.pack('>2h2B'), lo que siempre genera exactamente 6 bytes por mensaje (2 + 2 + 1 + 1), así que el receptor sabe que cada paquete ocupa 6 bytes exactos. Gracias a esto no hacen falta delimitadores ni saltos de línea, porque el tamaño fijo del paquete permite al receptor dividir el flujo de datos en bloques de 6 bytes.
+
+<img width="897" height="655" alt="Captura de pantalla 2025-09-17 145856" src="https://github.com/user-attachments/assets/5b89fa8b-410e-4833-aa05-622ff03a845e" />
+
+<img width="896" height="651" alt="Captura de pantalla 2025-09-17 145942" src="https://github.com/user-attachments/assets/44201bdc-9c68-4c4a-b16b-acf4d5c7a616" />
+
+### Cambios importantes del nuevo código con respecto al anterior
+
+**Código anterior — datos como texto (CSV):**
+
+```javascript
+let values = port.readLine().split(",");
+microBitX = int(values[0]) + windowWidth / 2;
+microBitY = int(values[1]) + windowHeight / 2;
+microBitAState = values[2].toLowerCase() === "true";
+microBitBState = values[3].toLowerCase() === "true";
+updateButtonStates(microBitAState, microBitBState);
+```
+
+- Los datos venían como una línea de texto: "123,456,true,false".
+- Se usaba .readLine() para leer la línea completa.
+- Luego .split(",") para separar los valores.
+- Cada valor había que convertirlo de texto a número o booleano (int() y comparaciones con "true").
+
+**Código nuevo — datos binarios (>2h2B):**
+```javascript
+if (port.availableBytes() >= 6) {
+  let data = port.readBytes(6);
+  if (data) {
+    const buffer = new Uint8Array(data).buffer;
+    const view = new DataView(buffer);
+
+    microBitX = view.getInt16(0);
+    microBitY = view.getInt16(2);
+    microBitAState = view.getUint8(4) === 1;
+    microBitBState = view.getUint8(5) === 1;
+    updateButtonStates(microBitAState, microBitBState);
+
+    print(`microBitX: ${microBitX} microBitY: ${microBitY} ...`);
+  }
+}
+```
+
+- Ahora se usan 6 bytes exactos en cada mensaje:
+    - 2h → 2 enteros con signo de 2 bytes cada uno → microBitX y microBitY
+    - 2B → 2 enteros sin signo de 1 byte cada uno → estados de los botones A y B
+- Se usa .readBytes(6) en vez de .readLine().
+- Se crea un DataView para interpretar los bytes como números binarios, no como texto.
+- Ya no hay que convertir strings a números: directamente se leen los valores binarios correctos.
