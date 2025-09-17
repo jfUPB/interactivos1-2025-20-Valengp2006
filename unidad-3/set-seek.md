@@ -5,6 +5,7 @@
 
 <img width="1024" height="768" alt="Simple Flowchart Infographic Graph" src="https://github.com/user-attachments/assets/53c4845f-6876-4813-88c5-32bb1040a894" />
 
+...
 
 **Vectores de prueba:**
 
@@ -34,5 +35,6 @@
 | CONFIG | Entrada serial ‘A’ | Igual que botón A: `count++` con tope 60 | CONFIG |
 | CONFIG | Entrada serial ‘B’ | Igual que botón B: `count--` con piso 10 | CONFIG |
 | CONFIG | Entrada serial ‘S’ | Igual que botón S: armar bomba | ARMED |
+
 
 
