@@ -416,7 +416,7 @@ En estas dos unidades hemos explorado dos formas de comunicación serial. A cont
   
 Fue crucial porque la comunicación serial no garantiza que los datos lleguen en bloques perfectos. Como vimos en los experimentos, el receptor (p5.js) podía empezar a leer a la mitad de un paquete de 6 bytes, mezclando datos del final de un mensaje con el principio del siguiente. Esto causaba **errores de sincronización**, resultando en valores absurdos como `microBitX: 3073`. El *framing* resuelve esto al darle una estructura clara a cada paquete.
 
-- **¿Cómo funciona el *framing*? 🚂**
+- **¿Cómo funciona el *framing*?**
   - El *framing* funciona como un tren. Define un paquete con partes bien diferenciadas:
     - **Cabecera (*Header*)**: Un byte especial al inicio (`0xAA`), que actúa como la **locomotora**. Le dice al receptor: "¡Aquí empieza un nuevo paquete!".
     - **Datos (*Payload*)**: El contenido real del mensaje (los 6 bytes con los valores del acelerómetro y botones), que son los **vagones de carga**.
@@ -482,3 +482,45 @@ El **checksum** es un código de detección de errores. Se calcula realizando un
     - **¿Qué es un `DataView`?** Un `DataView` es un **intérprete de bajo nivel** para leer datos binarios de un `buffer`. Un buffer es solo una secuencia de bytes sin formato; `DataView` nos permite decirle a JavaScript: "lee los 2 bytes que empiezan en la posición 0 como un entero de 16 bits con signo (`getInt16`)", o "lee el byte en la posición 4 como un entero de 8 bits sin signo (`getUint8`)".
     - **¿Por qué son necesarias estas conversiones?** Porque los datos en el buffer son solo bytes crudos (números entre 0 y 255). No podemos simplemente "tomarlos". Por ejemplo, el valor de `xValue` (`500`) se envía como dos bytes (`0x01` y `0xF4`). Ni `1` ni `244` son `500`. Necesitamos `DataView` para que los combine e interprete correctamente como un solo número de 16 bits (`getInt16`). Es el paso que traduce los bytes binarios a los tipos de datos (números, booleanos) que nuestro programa puede entender y usar.
 
+## Evaluación de la unidad:
+
+#### 1. Profundidad de la Indagación
+
+- **Nivel Excelente (4.5 - 5.0)**
+
+- **Justificación:**
+
+  - Considero que mi indagación fue más allá de simplemente implementar el código. Exploré activamente el **"porqué"** de los problemas y las soluciones, demostrando una curiosidad genuina por los principios de la comunicación de datos.
+  - En la Actividad 02, no me limité a ver los datos binarios, sino que me pregunté por qué un valor como `fb bc` se interpretaba como `64444`. Esto me llevó a investigar y comprender a fondo el concepto de **complemento a dos** para los números con signo, lo que demuestra una indagación profunda sobre la representación de datos.
+  - Formulé preguntas que comparan y contrastan los protocolos, como se ve en mi tabla comparativa, donde analicé las **ventajas y desventajas** de ASCII vs. Binario no solo en teoría, sino aplicadas directamente al proyecto, reflexionando sobre los `trade-offs` entre eficiencia y facilidad de uso.
+
+
+#### 2. Calidad de la Experimentación
+
+- **Nivel Excelente (4.5 - 5.0)**
+
+- **Justificación:**
+  
+  - Creo que mis experimentos no solo verificaron el funcionamiento, sino que los diseñé de forma precisa para **aislar y demostrar** la raíz de los problemas, lo cual es una marca de experimentación de alta calidad.
+  -  Mi experimento más destacado fue en la Actividad 03, donde intencionadamente usé el código sin *framing* para **reproducir de forma consistente el error de sincronización**. Al capturar y analizar los valores incorrectos (`microBitX: 3073`), demostré la necesidad del *framing* de una manera práctica, en lugar de solo aceptarla teóricamente.
+  - Utilicé la aplicación `SerialTerminal` de manera deliberada, cambiando entre la vista de **Texto** y **Todo en Hex** para verificar mis hipótesis sobre cómo se estaban enviando y recibiendo los bytes. Esto muestra que diseñé un experimento efectivo para validar la lectura de datos.
+
+#### 3. Análisis y Reflexión
+
+- **Nivel Excelente (4.5 - 5.0)**
+
+- **Justificación:**
+  
+  - Considero que mi bitácora demuestra una reflexión profunda, ya que conecté claramente la evidencia (capturas de la terminal, logs de error) con la teoría. Construí un **modelo mental robusto** de todo el flujo de datos, desde el empaquetado en el microcontrolador hasta el desempaquetado y la sincronización en p5.js.
+  - Mi explicación en la sección "Reflect" sobre por qué el *framing* es necesario es un claro ejemplo de mi análisis. No solo describí el problema, sino que analicé su **causa raíz** (el flujo de bytes no garantizado) y cómo la combinación de un `header` y un `checksum` aporta robustez al sistema.
+  - Mi análisis línea por línea de la función `readSerialData()` es otra prueba de esta reflexión. Expliqué la lógica detrás de cada decisión de diseño: por qué usé `concat`, la condición del bucle `while`, el propósito de `shift`, `continue` y `break`, y la diferencia crítica entre `slice` y `splice`.
+
+#### 4. Apropiación y Articulación de Conceptos
+
+- **Nivel Excelente (4.5 - 5.0)**
+
+- **Justificación:**
+  
+  - Siento que demuestro una maestría conceptual al haber explicado temas complejos con mis propias palabras y analogías. Articulé cómo los diferentes componentes del protocolo (header, payload, checksum, DataView) funcionan como un **sistema interdependiente** para garantizar una comunicación fiable.
+  - Expliqué conceptos abstractos de forma muy clara. Por ejemplo, mi analogía del **tren** para el *framing* (locomotora, vagones y cabús) fue una forma original y efectiva de articular una idea compleja.
+  - Demostré un dominio total de los conceptos de bajo nivel al explicar `struct`, `DataView`, y especialmente la representación de números negativos con **complemento a dos**. Mi capacidad para explicar por qué `fb bc` es `-1092` y no `64444` muestra que logré una comprensión personal y profunda del tema.
