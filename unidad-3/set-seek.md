@@ -4,35 +4,20 @@
 
 ![Simple Flowchart Infographic Graph](https://github.com/user-attachments/assets/fa3736c0-1a35-4d8f-bac0-6c7d66424002)
 
-
 **Vectores de prueba:**
 
-- A, B, S, T: evento recibido (vía botón o puerto serie).
-- tick: ha pasado ≥1 s (utime.ticks_diff(...) > 1000).
-- —: no hay evento.
-
-| Estado inicial | Evento disparador | Acciones esperadas | Estado final |
-|:--------------:|:-----------------:|:------------------:|:------------:|
-| CONFIG  | — | Ninguna acción visible | CONFIG |
-| CONFIG  | A | `count=min(21,60)`; `display.show(21)` | CONFIG |
-| CONFIG  | A | `count=min(60,60)=60`; `display.show(60)` | CONFIG |
-| CONFIG  | A | `count` permanece 60; `display.show(60)` | CONFIG |
-| CONFIG  | B | `count=max(10,19)=19`; `display.show(19)` | CONFIG |
-| CONFIG  | B | `count` permanece 10; `display.show(10)` | CONFIG |
-| CONFIG  | S | `startTime=now`; `display.show(k)` | ARMED |
-| ARMED  | — (<1 s) | Ninguna | ARMED |
-| ARMED | tick (≥1 s) | `count=19`; `display.show(19)`; `startTime=now` | ARMED |
-| ARMED  | tick (≥1 s) | `count=0`; `display.show(Image.SKULL)`; pasar a EXPLODED | EXPLODED |
-| ARMED  | A | `key[0]='A'`; `keyindex=1` | ARMED |
-| ARMED  | B | `key[1]='B'`; `keyindex=2` | ARMED |
-| ARMED  | A | `key[2]='A'`; `keyindex=3` → comparar con `PASSWORD` → correcto | CONFIG (reinicio) |
-| ARMED  | B (clave incorrecta) | `key[2]='B'`; `keyindex=3` → comparación falla → `keyindex=0` | ARMED |
-| ARMED  | Entrada no A/B (ej. S o T) | Sin acción sobre clave ni `count` | ARMED |
-| EXPLODED | T | `count=20`; `display.show(20)`; `startTime=now` | CONFIG |
-| EXPLODED | — | Ninguna (permanece calavera) | EXPLODED |
-| CONFIG | Entrada serial ‘A’ | Igual que botón A: `count++` con tope 60 | CONFIG |
-| CONFIG | Entrada serial ‘B’ | Igual que botón B: `count--` con piso 10 | CONFIG |
-| CONFIG | Entrada serial ‘S’ | Igual que botón S: armar bomba | ARMED |
+| #  | Estado inicial   | Evento/Entrada             | Estado esperado     | Salida/Acción esperada                           |
+|----|-----------------|----------------------------|--------------------|-------------------------------------------------|
+| 1  | `STATE_CONFIG`  | `A`                        | `STATE_CONFIG`     | `count = min(count+1,60)`; `mostrar(count)`     |
+| 2  | `STATE_CONFIG`  | `B`                        | `STATE_CONFIG`     | `count = max(10,count-1)`; `mostrar(count)`     |
+| 3  | `STATE_CONFIG`  | `ESPACIO`                  | `STATE_ARMED`      | `startTime = ticks_ms()`; `mostrar(count)`      |
+| 4  | `STATE_ARMED`   | `A` (correcto, progreso=0) | `STATE_ARMED`      | `progreso = 1`                                  |
+| 5  | `STATE_ARMED`   | `B` (correcto, progreso=1) | `STATE_ARMED`      | `progreso = 2`                                  |
+| 6  | `STATE_ARMED`   | `A` (correcto, progreso=2) | `STATE_CONFIG`     | `estado = DESACTIVADA`; `count = 20`; `mostrar(count)` |
+| 7  | `STATE_ARMED`   | `B` (incorrecto en progreso=0) | `STATE_ARMED`  | `progreso = 0` (reinicio)                       |
+| 8  | `STATE_ARMED`   | `tick` con `count > 0`     | `STATE_ARMED`      | `count--`; `mostrar(count)`                     |
+| 9  | `STATE_ARMED`   | `tick` con `count = 0`     | `STATE_EXPLODED`   | `mostrar(SKULL)`                                |
+| 10 | `STATE_EXPLODED`| `R`                        | `STATE_CONFIG`     | `count = 20`; `mostrar(count)`; reset           |
 
 
 
