@@ -397,3 +397,87 @@ Creo que este error ocurre porque los 6 bytes que lee el programa no están alin
 
 <img width="1736" height="809" alt="Captura de pantalla 2025-09-17 153631" src="https://github.com/user-attachments/assets/f5aebda7-b57a-445f-a4d3-adf6bd6658ab" />
 
+## Actividad 05 - 18/09/2025
+
+**Comparación de Protocolos: ASCII vs. Binario**
+
+En estas dos unidades hemos explorado dos formas de comunicación serial. A continuación, se comparan ambos protocolos aplicados a nuestro proyecto de dibujo con el acelerómetro.
+
+| Aspecto | Protocolo ASCII (Unidad 4) | Protocolo Binario (Unidad 5) | Justificación con Ejemplos del Proyecto |
+| :--- | :--- | :--- | :--- |
+| **Eficiencia** | **Baja**. Cada número se convierte a texto. El valor `-1023` ocupa 5 bytes ("-", "1", "0", "2", "3"). | **Alta**. Los números se envían en su formato nativo. `-1023` ocupa solo 2 bytes como un entero de 16 bits (`0xFC01`). | El mensaje ASCII `"-1023,512,1,0\n"` puede ocupar hasta 15 bytes, mientras que el paquete binario con framing siempre ocupa **8 bytes fijos**. |
+| **Velocidad** | **Más lento**. Al enviar más bytes por mensaje, la transmisión tarda más tiempo. | **Más rápido**. Con mensajes más compactos, se pueden enviar más datos en el mismo período, mejorando la respuesta. | A 115200 baudios, enviar 15 bytes (ASCII) es casi el doble de lento que enviar 8 bytes (binario), lo que resulta en una menor latencia. |
+| **Facilidad de Uso y Depuración** | **Alta**. Los datos son legibles en cualquier terminal serial (`"120,-456,0,1"`). Es fácil ver si los valores son correctos a simple vista. | **Baja**. Los datos aparecen como "basura" o en hexadecimal (`AA 01 F4 02 0C...`). Se necesita una herramienta o código para interpretarlos. | En la Actividad 02, vimos que sin la vista hexadecimal, los datos binarios eran incomprensibles. Depurar el ASCII fue tan simple como leer la consola. |
+| **Uso de Recursos (CPU)** | **Mayor**. Requiere conversiones constantes: de número a texto en el micro:bit (`format()`) y de texto a número en p5.js (`int()`, `split()`). | **Menor**. El empaquetado (`struct.pack`) y desempaquetado (`DataView`) son operaciones binarias muy eficientes y directas para el procesador. | En p5.js, el código ASCII tenía que hacer `split(',')` y `int()`, que son operaciones con texto. El código binario lee directamente los bytes en números, lo cual es más liviano para el navegador. |
+
+**Análisis del Protocolo Binario y *Framing***
+
+- **¿Por qué fue necesario introducir *framing*?**
+  
+Fue crucial porque la comunicación serial no garantiza que los datos lleguen en bloques perfectos. Como vimos en los experimentos, el receptor (p5.js) podía empezar a leer a la mitad de un paquete de 6 bytes, mezclando datos del final de un mensaje con el principio del siguiente. Esto causaba **errores de sincronización**, resultando en valores absurdos como `microBitX: 3073`. El *framing* resuelve esto al darle una estructura clara a cada paquete.
+
+- **¿Cómo funciona el *framing*? 🚂**
+  - El *framing* funciona como un tren. Define un paquete con partes bien diferenciadas:
+    - **Cabecera (*Header*)**: Un byte especial al inicio (`0xAA`), que actúa como la **locomotora**. Le dice al receptor: "¡Aquí empieza un nuevo paquete!".
+    - **Datos (*Payload*)**: El contenido real del mensaje (los 6 bytes con los valores del acelerómetro y botones), que son los **vagones de carga**.
+    - **Suma de Verificación (*Checksum*)**: Un byte al final que valida la integridad de los datos, como el **vagón de cola o cabús** que confirma que el tren está completo y correcto.
+
+- **¿Qué es un carácter de sincronización?**
+  
+Es el **byte de cabecera** (`0xAA` en nuestro caso). Es un valor único y predefinido que no debería aparecer (o es muy improbable que aparezca) en los datos. Su única función es actuar como una señal clara de "inicio de paquete" para que el receptor pueda sincronizarse con el flujo de datos.
+
+- **¿Qué es el *checksum* y para qué sirve?**
+  
+El **checksum** es un código de detección de errores. Se calcula realizando una operación matemática sobre los datos del paquete (en nuestro caso, sumando todos los bytes de datos). Sirve para verificar que los datos no se hayan corrompido durante la transmisión. El emisor envía el *checksum* junto con los datos, y el receptor hace el mismo cálculo. Si los resultados coinciden, el paquete se considera válido; si no, se descarta.
+
+**Análisis del Código en p5.js (`readSerialData`)**
+
+- **`serialBuffer = serialBuffer.concat(newData);`**
+  - **¿Qué hace `concat`?** La función `concat` **une o concatena** dos arrays. En este caso, añade los nuevos bytes recibidos (`newData`) al final del array que ya teníamos (`serialBuffer`).
+  -  **¿Por qué?** Porque los datos seriales pueden llegar en fragmentos. Podríamos recibir 3 bytes ahora y 10 más en unos milisegundos. `concat` nos permite acumular todos estos fragmentos en un solo lugar (el *buffer*) para poder procesarlos como un flujo continuo.
+
+- **`while (serialBuffer.length >= 8)`**
+    - **¿Por qué un bucle que recorre si hay 8 o más bytes?** Porque nuestro protocolo de *framing* define que un paquete completo y válido tiene una longitud **exacta de 8 bytes** (1 de cabecera + 6 de datos + 1 de checksum). Si no tenemos al menos 8 bytes en el buffer, es imposible que tengamos un paquete completo, así que no tiene sentido intentar procesarlo. El bucle se asegura de que solo actuemos cuando tengamos suficientes datos.
+
+- **`if (serialBuffer[0] !== 0xaa)`**
+    - **¿Qué significa `0xaa`?** Es la **notación hexadecimal** para el número decimal 170. El prefijo `0x` indica que el número está en base 16. Este es el valor que elegimos como nuestro **carácter de sincronización** o *header*.
+
+- **`serialBuffer.shift(); continue;`**
+    - **¿Qué hacen?** Si el primer byte del buffer (`serialBuffer[0]`) no es nuestra cabecera `0xAA`, significa que es un dato inválido o "basura".
+        - `shift()`: **Elimina el primer elemento** del array `serialBuffer`.
+        - `continue`: **Detiene la iteración actual** del bucle `while` y salta inmediatamente a la siguiente.
+    - **¿Por qué?** Esta es la lógica de sincronización. Si no encontramos la "locomotora" (`0xAA`), descartamos el byte (`shift`) y revisamos el siguiente (`continue`), repitiendo el proceso hasta encontrar el inicio de un paquete válido.
+
+- **`if (serialBuffer.length < 8) break;`**
+    - **¿Qué hace `break`?** Si encontramos una cabecera `0xAA` pero el buffer todavía no tiene los 8 bytes necesarios para un paquete completo, la instrucción `break` **detiene y sale completamente del bucle `while`**.
+    - **¿Por qué?** Para evitar quedar en un bucle infinito y para esperar a que lleguen más datos seriales en el siguiente ciclo del `draw()`. Rompemos el bucle para darle tiempo al buffer a llenarse con el resto del paquete.
+
+- **`slice` vs. `splice`**
+    - `let packet = serialBuffer.slice(0, 8);`
+    - `serialBuffer.splice(0, 8);`
+    - **Diferencia**:
+      - `slice(inicio, fin)`: **Copia** una porción del array y la devuelve como un nuevo array, **sin modificar el original**.
+        * `splice(inicio, cantidad)`: **Elimina** elementos de un array, **modificando el original**.
+    - **¿Por qué se usa `splice` después de `slice`?** Es un proceso de dos pasos:
+        1.  Primero, **copiamos** el paquete de 8 bytes a la variable `packet` para poder analizarlo (`slice`).
+        2.  Luego, una vez copiado, **eliminamos** esos 8 bytes del buffer principal (`splice`) para que no vuelvan a ser procesados en la siguiente iteración del bucle.
+
+- **`reduce((acc, val) => acc + val, 0)`**
+    - **¿Cómo opera `reduce`?** Esta función "reduce" un array a un solo valor. Funciona así:
+        - `acc` (acumulador): Guarda el resultado acumulado. Empieza en `0` (el segundo argumento de `reduce`).
+        -  `val` (valor actual): Es cada uno de los bytes en `dataBytes`.
+        - Para cada byte del array, ejecuta la función flecha `(acc, val) => acc + val`, que simplemente suma el valor actual al acumulador. Al final, devuelve la suma total de todos los bytes. Es una forma elegante y funcional de hacer un bucle para sumar elementos.
+
+- **`if (computedChecksum !== receivedChecksum)`**
+    - **¿Por qué se compara el checksum?** Esta es la **verificación de integridad**. Comparamos el `checksum` que nos llegó en el paquete (calculado por el micro:bit) con el que nosotros acabamos de calcular a partir de los datos recibidos.
+    - **¿Para qué sirve?** Si los dos valores no son iguales, significa que uno o más bytes de los datos se corrompieron durante la transmisión (por ruido eléctrico, por ejemplo).
+
+- **`continue;` (dentro del if del checksum)**
+    - **¿Qué hace `continue` aquí?** Si los checksums no coinciden, `continue` detiene el procesamiento de este paquete corrupto y salta al inicio del bucle `while` para buscar el siguiente paquete.
+    - **¿Por qué?** Porque si los datos están corruptos, no tiene sentido intentar interpretarlos. Sería peligroso y podría causar errores en la aplicación. Lo más seguro es descartar el paquete y seguir adelante.
+
+- **`DataView` y la conversión de datos**
+    - `let view = new DataView(buffer);`
+    - `microBitX = view.getInt16(0);`
+    - **¿Qué es un `DataView`?** Un `DataView` es un **intérprete de bajo nivel** para leer datos binarios de un `buffer`. Un buffer es solo una secuencia de bytes sin formato; `DataView` nos permite decirle a JavaScript: "lee los 2 bytes que empiezan en la posición 0 como un entero de 16 bits con signo (`getInt16`)", o "lee el byte en la posición 4 como un entero de 8 bits sin signo (`getUint8`)".
+    - **¿Por qué son necesarias estas conversiones?** Porque los datos en el buffer son solo bytes crudos (números entre 0 y 255). No podemos simplemente "tomarlos". Por ejemplo, el valor de `xValue` (`500`) se envía como dos bytes (`0x01` y `0xF4`). Ni `1` ni `244` son `500`. Necesitamos `DataView` para que los combine e interprete correctamente como un solo número de 16 bits (`getInt16`). Es el paso que traduce los bytes binarios a los tipos de datos (números, booleanos) que nuestro programa puede entender y usar.
