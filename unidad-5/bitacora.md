@@ -456,8 +456,8 @@ El **checksum** es un código de detección de errores. Se calcula realizando un
     - `let packet = serialBuffer.slice(0, 8);`
     - `serialBuffer.splice(0, 8);`
     - **Diferencia**:
-      - `slice(inicio, fin)`: **Copia** una porción del array y la devuelve como un nuevo array, **sin modificar el original**.
-        * `splice(inicio, cantidad)`: **Elimina** elementos de un array, **modificando el original**.
+      - `slice(inicio, fin)`: **Copia** una porción del array y la devuelve como un nuevo array, **sin modificar el original**
+      - `splice(inicio, cantidad)`: **Elimina** elementos de un array, **modificando el original**.
     - **¿Por qué se usa `splice` después de `slice`?** Es un proceso de dos pasos:
         1.  Primero, **copiamos** el paquete de 8 bytes a la variable `packet` para poder analizarlo (`slice`).
         2.  Luego, una vez copiado, **eliminamos** esos 8 bytes del buffer principal (`splice`) para que no vuelvan a ser procesados en la siguiente iteración del bucle.
@@ -481,3 +481,4 @@ El **checksum** es un código de detección de errores. Se calcula realizando un
     - `microBitX = view.getInt16(0);`
     - **¿Qué es un `DataView`?** Un `DataView` es un **intérprete de bajo nivel** para leer datos binarios de un `buffer`. Un buffer es solo una secuencia de bytes sin formato; `DataView` nos permite decirle a JavaScript: "lee los 2 bytes que empiezan en la posición 0 como un entero de 16 bits con signo (`getInt16`)", o "lee el byte en la posición 4 como un entero de 8 bits sin signo (`getUint8`)".
     - **¿Por qué son necesarias estas conversiones?** Porque los datos en el buffer son solo bytes crudos (números entre 0 y 255). No podemos simplemente "tomarlos". Por ejemplo, el valor de `xValue` (`500`) se envía como dos bytes (`0x01` y `0xF4`). Ni `1` ni `244` son `500`. Necesitamos `DataView` para que los combine e interprete correctamente como un solo número de 16 bits (`getInt16`). Es el paso que traduce los bytes binarios a los tipos de datos (números, booleanos) que nuestro programa puede entender y usar.
+
