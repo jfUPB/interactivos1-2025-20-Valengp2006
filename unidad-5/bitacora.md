@@ -527,3 +527,8 @@ El **checksum** es un código de detección de errores. Se calcula realizando un
   - Expliqué conceptos abstractos de forma muy clara. Por ejemplo, mi analogía del **tren** para el *framing* (locomotora, vagones y cabús) fue una forma original y efectiva de articular una idea compleja.
   - Demostré un dominio total de los conceptos de bajo nivel al explicar `struct`, `DataView`, y especialmente la representación de números negativos con **complemento a dos**. Mi capacidad para explicar por qué `fb bc` es `-1092` y no `64444` muestra que logré una comprensión personal y profunda del tema.
 
+MI NOTA PROPUESTA ES: 5
+
+
+
+
