@@ -157,6 +157,7 @@ Está relacionado porque esa línea convierte (empaqueta) los valores en un mens
 
 Esto sucede porque el programa está **interpretando un número con signo como si fuera sin signo**.
 
+<a name="pr1"></a>
 El valor hexadecimal `fb bc` en binario es `1111101110111100`.
 
 - Si se interpreta como **entero sin signo (unsigned)**, su valor decimal es `64444`.
@@ -491,8 +492,9 @@ El **checksum** es un código de detección de errores. Se calcula realizando un
 - **Justificación:**
 
   - Considero que mi indagación fue más allá de simplemente implementar el código. Exploré activamente el **"porqué"** de los problemas y las soluciones, demostrando una curiosidad genuina por los principios de la comunicación de datos.
-  - En la Actividad 02, no me limité a ver los datos binarios, sino que me pregunté por qué un valor como `fb bc` se interpretaba como `64444`. Esto me llevó a investigar y comprender a fondo el concepto de **complemento a dos** para los números con signo, lo que demuestra una indagación profunda sobre la representación de datos.
+  - En la Actividad 02, no me limité a ver los datos binarios, sino que me pregunté por qué un valor como `fb bc` se interpretaba como `64444`. Esto me llevó a investigar y comprender a fondo el concepto de **complemento a dos** para los números con signo, lo que demuestra una indagación profunda sobre la representación de datos. Como se puede ver [aquí](#pr1)
   - Formulé preguntas que comparan y contrastan los protocolos, como se ve en mi tabla comparativa, donde analicé las **ventajas y desventajas** de ASCII vs. Binario no solo en teoría, sino aplicadas directamente al proyecto, reflexionando sobre los `trade-offs` entre eficiencia y facilidad de uso.
+  
 
 
 #### 2. Calidad de la Experimentación
@@ -524,3 +526,4 @@ El **checksum** es un código de detección de errores. Se calcula realizando un
   - Siento que demuestro una maestría conceptual al haber explicado temas complejos con mis propias palabras y analogías. Articulé cómo los diferentes componentes del protocolo (header, payload, checksum, DataView) funcionan como un **sistema interdependiente** para garantizar una comunicación fiable.
   - Expliqué conceptos abstractos de forma muy clara. Por ejemplo, mi analogía del **tren** para el *framing* (locomotora, vagones y cabús) fue una forma original y efectiva de articular una idea compleja.
   - Demostré un dominio total de los conceptos de bajo nivel al explicar `struct`, `DataView`, y especialmente la representación de números negativos con **complemento a dos**. Mi capacidad para explicar por qué `fb bc` es `-1092` y no `64444` muestra que logré una comprensión personal y profunda del tema.
+
