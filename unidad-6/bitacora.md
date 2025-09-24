@@ -45,3 +45,13 @@ Inicialmente en `page1` muestra el letrero de *esperando conexión*, cuando se a
 <img width="1377" height="884" alt="Captura de pantalla 2025-09-24 153409" src="https://github.com/user-attachments/assets/adea53ef-9451-44b5-a934-76dfc2c0e5d1" />
 
 <img width="708" height="532" alt="Captura de pantalla 2025-09-24 153509" src="https://github.com/user-attachments/assets/90ecf7b5-59cb-4e50-97eb-7bde477ad0bc" />
+
+## Actividad 02
+
+**Piensa en cómo te conectas a Internet en casa o en la Universidad. ¿Usas Wi-Fi? ¿Un cable de red? Eso es simplemente tu “rampa de acceso” a la gran red de carreteras. ¿Qué pasaría si esa rampa se corta? Anota tus ideas.**
+
+En mi casa me conecto a Internet mediante el Wi-Fi, a excepción deñ televisor, el cual está conectado por medio de un cable de red. Si esa rampa se corta, entonces mi "vehículo" quedaría completamente desconectado de la red de carreteras, 
+
+
+
+
