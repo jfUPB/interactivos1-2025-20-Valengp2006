@@ -5,7 +5,7 @@
 
 1. Instalar node.js y Git
 2. Abrir el repositorio donde está la información
-3. En el apartado de <span style="color: azul;">Code.</span>
+3. En el apartado de <span style="color:azul;">Code.</span>
 
 **¿Qué ocurrió en la terminal cuando ejecutaste npm install? ¿Cuál crees que es su propósito?**
 
@@ -24,3 +24,4 @@
 
 
 **Describe qué sucede en ambas páginas del navegador cuando mueves una de las ventanas. ¿Cambia algo visualmente? ¿Qué mensajes aparecen (si los hay) en la consola del navegador (usualmente accesible con F12 -> Pestaña Consola) y en la terminal del servidor?**
+
