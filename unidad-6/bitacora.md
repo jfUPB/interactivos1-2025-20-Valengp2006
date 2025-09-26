@@ -50,7 +50,39 @@ Inicialmente en `page1` muestra el letrero de *esperando conexión*, cuando se a
 
 **Piensa en cómo te conectas a Internet en casa o en la Universidad. ¿Usas Wi-Fi? ¿Un cable de red? Eso es simplemente tu “rampa de acceso” a la gran red de carreteras. ¿Qué pasaría si esa rampa se corta? Anota tus ideas.**
 
-En mi casa me conecto a Internet mediante el Wi-Fi, a excepción deñ televisor, el cual está conectado por medio de un cable de red. Si esa rampa se corta, entonces mi "vehículo" quedaría completamente desconectado de la red de carreteras, 
+En mi casa me conecto a Internet mediante el Wi-Fi, a excepción del televisor, el cual está conectado por medio de un cable de red. Si esa rampa se corta, entonces mi "vehículo" quedaría completamente desconectado de la red de carreteras, por lo que al cortarse esa rampa, quedaría completamente incomunicado con el servidor y demás espacios.
+
+**¿Puedes identificar otros ejemplos de relaciones Cliente-Servidor en tu vida diaria (no necesariamente digitales)? Por ejemplo, al pedir comida en un restaurante. ¿Quién es el cliente y quién el servidor? ¿Qué se pide y qué se entrega?**
+
+Al pedir comida en un restaurante, el servidor es el mesero, quien recibe la información que pide el usuario; el usuario es el mismo cliente, quien pide lo que desea recibir al servidor. Así, el servidor sabe lo que busca el cliente, lo busca y se lo entrega.
+
+**Toma la URL de tu sitio web favorito. Intenta identificar el protocolo, el nombre de dominio y la ruta (si la hay). ¿Qué crees que pasa si solo escribes el nombre de dominio (ej. www.google.com) sin una ruta específica? ¿Qué “página por defecto” crees que te envía el servidor?**
+
+$\color{red}{\text{Protocolo}}$
+$\color{blue}{\text{Nombre de dominio}}$
+$\color{green}{\text{Ruta específica}}$
+
+**Compara HTTP con los protocolos seriales que usaste.**
+- **¿Qué similitudes encuentras?**
+- **¿Qué diferencias clave ves?**
+- **¿Por qué crees que HTTP necesita ser más complejo que un simple envío de bytes como hacías con el micro:bit?**
+
+
+**Piensa en una página web simple, como un formulario de login.**
+- **¿Qué parte crees que es HTML (ej. los campos de texto, el botón)?**
+- **¿Qué parte es CSS (ej. el color del botón, el tipo de letra)?**
+- **¿Qué parte es JavaScript (ej. la comprobación de si escribiste algo antes de enviar, el mensaje de “contraseña incorrecta” que aparece sin recargar la página)?**
+
+
+**Compara el bucle draw() de p5.js con este modelo de “esperar a que algo pase y reaccionar”.**
+- **¿Qué ventajas crees que tiene el modelo basado en eventos para una interfaz de usuario web?**
+- **¿Sería eficiente tener un bucle draw() redibujando toda la página 60 veces por segundo si nada ha cambiado?**
+
+
+**¿Por qué crees que podría ser útil usar JavaScript tanto en el cliente (navegador) como en el servidor? ¿Se te ocurre alguna ventaja para los desarrolladores?**
+
+
+**Resume con tus propias palabras la diferencia fundamental entre una comunicación HTTP tradicional y una comunicación usando WebSockets/Socket.IO. ¿En qué tipo de aplicaciones has visto o podrías imaginar que se usa esta comunicación en tiempo real?**
 
 
 
