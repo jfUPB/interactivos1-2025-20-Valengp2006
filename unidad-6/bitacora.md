@@ -138,8 +138,23 @@ Usar el mismo lenguaje (JavaScript) en cliente y servidor es útil porque:
 
 ## Actividad 03 - 26/09/2025
 
+### Experimento 1:
 
+**Verificación del funcionamiento del programa antes de modificarlo:**
 
+Al ejecutar las pruebas y abrir las páginas **page1** y **page2**, el servidor muestra los siguientes registros en consola:
+
+- Se registran las conexiones de los clientes, cada uno con su **ID único**.
+- Los eventos **win1update** y **win2update** se reciben con las coordenadas de la ventana (`x, y, width, height`).
+- En los mensajes de depuración (`Debug`) se refleja:
+  - Número total de clientes conectados.
+  - Estado de las páginas activas (Page1, Page2).
+  - Número de clientes sincronizados (`Synced`).
+- Finalmente aparece el mensaje **"All clients are fully synced"**, indicando que la sincronización entre ambos clientes fue exitosa.
+  
+<img width="562" height="226" alt="Captura de pantalla 2025-09-26 153421" src="https://github.com/user-attachments/assets/0ba513f8-89a0-4fb1-9bc5-bb1d9f591212" />
+
+<img width="560" height="198" alt="Captura de pantalla 2025-09-26 153452" src="https://github.com/user-attachments/assets/0de8ed10-3ef6-492e-8594-82ff182d9faf" />
 
 
 
