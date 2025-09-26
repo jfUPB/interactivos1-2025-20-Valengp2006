@@ -59,8 +59,8 @@ Al pedir comida en un restaurante, el servidor es el mesero, quien recibe la inf
 **Toma la URL de tu sitio web favorito. Intenta identificar el protocolo, el nombre de dominio y la ruta (si la hay). ¿Qué crees que pasa si solo escribes el nombre de dominio (ej. www.google.com) sin una ruta específica? ¿Qué “página por defecto” crees que te envía el servidor?**
 
 $\color{red}{\text{Protocolo}}$
-$\color{blue}{\text{Nombre de dominio}}$
-$\color{green}{\text{Ruta específica}}$
+$\color{green}{\text{Nombre de dominio}}$
+$\color{orange}{\text{Ruta específica}}$
 
 URL: https://www.youtube.com/?app=desktop&hl=es
 
@@ -91,6 +91,7 @@ URL: https://www.youtube.com/?app=desktop&hl=es
 
 
 **Resume con tus propias palabras la diferencia fundamental entre una comunicación HTTP tradicional y una comunicación usando WebSockets/Socket.IO. ¿En qué tipo de aplicaciones has visto o podrías imaginar que se usa esta comunicación en tiempo real?**
+
 
 
 
