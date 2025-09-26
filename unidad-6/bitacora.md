@@ -81,24 +81,62 @@ URL: https://www.youtube.com/?app=desktop&hl=es
 - **¿Qué similitudes encuentras?**
 - **¿Qué diferencias clave ves?**
 - **¿Por qué crees que HTTP necesita ser más complejo que un simple envío de bytes como hacías con el micro:bit?**
+  
+- **Similitudes:**  
+  - Ambos definen un “idioma” con reglas claras entre emisor y receptor.  
+  - El cliente (navegador / micro:bit) envía un mensaje, y el servidor/receptor contesta.  
 
+- **Diferencias:**  
+  - HTTP es mucho más complejo: incluye cabeceras, códigos de estado, tipos de contenido.  
+  - Serial es más directo: solo transmite bytes sin tanta “meta-información”.  
+
+HTTP necesita esta complejidad porque en la web hay **múltiples tipos de datos** (texto, imágenes, video, JSON) y debe asegurar compatibilidad entre millones de clientes y servidores.
 
 ### Piensa en una página web simple, como un formulario de login.
 - **¿Qué parte crees que es HTML (ej. los campos de texto, el botón)?**
 - **¿Qué parte es CSS (ej. el color del botón, el tipo de letra)?**
 - **¿Qué parte es JavaScript (ej. la comprobación de si escribiste algo antes de enviar, el mensaje de “contraseña incorrecta” que aparece sin recargar la página)?**
 
+Ejemplo: formulario de login
+
+- **HTML:** los campos de texto (usuario, contraseña) y el botón.  
+- **CSS:** color del botón, tipo de letra, márgenes y estilos visuales.  
+- **JavaScript:** validar que el usuario escribió algo, mostrar un mensaje de error sin recargar la página.
 
 ### Compara el bucle draw() de p5.js con este modelo de “esperar a que algo pase y reaccionar”.
 - **¿Qué ventajas crees que tiene el modelo basado en eventos para una interfaz de usuario web?**
 - **¿Sería eficiente tener un bucle draw() redibujando toda la página 60 veces por segundo si nada ha cambiado?**
 
+- **draw() en p5.js:** corre constantemente en bucle (~60 fps), incluso si nada cambia.  
+- **Modelo de eventos en la web:** el navegador “espera” a que algo ocurra (click, resize, mensaje) y ejecuta la función correspondiente.  
+
+**Ventajas del modelo de eventos:**  
+
+- Más eficiente: no consume recursos redibujando todo sin necesidad.  
+- Más natural para interfaces de usuario (solo reaccionan cuando hay interacción).
+  
+Si la web usara un bucle `draw()` para todo, sería muy pesado y poco práctico.
 
 ### ¿Por qué crees que podría ser útil usar JavaScript tanto en el cliente (navegador) como en el servidor? ¿Se te ocurre alguna ventaja para los desarrolladores?
 
+Usar el mismo lenguaje (JavaScript) en cliente y servidor es útil porque:  
 
+- Evita que el desarrollador tenga que aprender dos lenguajes distintos.  
+- Se pueden **compartir librerías y lógica** (ej. validación de formularios en cliente y servidor).  
+- Hace que el flujo de desarrollo sea más rápido y consistente.
+  
 ### Resume con tus propias palabras la diferencia fundamental entre una comunicación HTTP tradicional y una comunicación usando WebSockets/Socket.IO. ¿En qué tipo de aplicaciones has visto o podrías imaginar que se usa esta comunicación en tiempo real?
 
+- **HTTP tradicional:** es como enviar un correo → cada vez que quiero algo, debo pedirlo y esperar la respuesta.  
+- **WebSockets/Socket.IO:** es como abrir una llamada telefónica → la conexión queda abierta, y ambos lados pueden enviarse mensajes en tiempo real.
+
+**Aplicaciones típicas:**  
+- Chats en línea (WhatsApp Web, Messenger).  
+- Juegos multijugador en tiempo real.  
+- Colaboración en vivo (Google Docs, Figma).  
+- Monitoreo de sensores en tiempo real (IoT).
+
+## Actividad 03 - 26/09/2025
 
 
 
