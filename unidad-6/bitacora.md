@@ -1,7 +1,7 @@
 # Evidencias de la unidad 6
 ## Actividad 01 - 24/09/2025
 
-**Paso a paso para iniciar el programa**
+### Paso a paso para iniciar el programa**
 
 1. Instalar node.js y Git
 2. Abrir el repositorio donde está la información
@@ -91,6 +91,7 @@ URL: https://www.youtube.com/?app=desktop&hl=es
 
 
 **Resume con tus propias palabras la diferencia fundamental entre una comunicación HTTP tradicional y una comunicación usando WebSockets/Socket.IO. ¿En qué tipo de aplicaciones has visto o podrías imaginar que se usa esta comunicación en tiempo real?**
+
 
 
 
