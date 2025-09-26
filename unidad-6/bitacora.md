@@ -73,6 +73,10 @@ URL: https://www.youtube.com/?app=desktop&hl=es
 - Si solo escribo el dominio sin una ruta específica, igual me lleva a la página de inicio del sitio web.
 - El servidor me envía por defecto a la página principal del sintio web.
 
+<img width="1919" height="993" alt="Captura de pantalla 2025-09-26 145109" src="https://github.com/user-attachments/assets/745a847d-af55-4ec0-93d8-7cf83a3c7a9f" />
+<img width="1919" height="987" alt="Captura de pantalla 2025-09-26 145125" src="https://github.com/user-attachments/assets/e08b5cd5-ad31-4162-84a6-c6a2cf924785" />
+
+
 ### Compara HTTP con los protocolos seriales que usaste.
 - **¿Qué similitudes encuentras?**
 - **¿Qué diferencias clave ves?**
@@ -94,6 +98,7 @@ URL: https://www.youtube.com/?app=desktop&hl=es
 
 
 ### Resume con tus propias palabras la diferencia fundamental entre una comunicación HTTP tradicional y una comunicación usando WebSockets/Socket.IO. ¿En qué tipo de aplicaciones has visto o podrías imaginar que se usa esta comunicación en tiempo real?
+
 
 
 
