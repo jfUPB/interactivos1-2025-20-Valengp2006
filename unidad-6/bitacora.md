@@ -64,7 +64,11 @@ $\color{green}{\text{Ruta específica}}$
 
 URL: https://www.youtube.com/?app=desktop&hl=es
 
-$\color{red}{\text{https://}}\color{blue}{\text{www.youtube.com}}\color{green}{\text{/\?app=desktop\&hl=es}}$
+```diff
+- https://
++ [www.youtube.com](https://www.youtube.com)
+! /?app=desktop&hl=es
+```
 
 **Compara HTTP con los protocolos seriales que usaste.**
 - **¿Qué similitudes encuentras?**
@@ -87,6 +91,7 @@ $\color{red}{\text{https://}}\color{blue}{\text{www.youtube.com}}\color{green}{\
 
 
 **Resume con tus propias palabras la diferencia fundamental entre una comunicación HTTP tradicional y una comunicación usando WebSockets/Socket.IO. ¿En qué tipo de aplicaciones has visto o podrías imaginar que se usa esta comunicación en tiempo real?**
+
 
 
 
