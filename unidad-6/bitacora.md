@@ -183,7 +183,7 @@ Esto confirma que **el servidor asocia cada URL exactamente con las rutas defini
 
 - Al abrir  **`page2`**:
 
-<img width="669" height="113" alt="Captura de pantalla 2025-10-01 145220" src="https://github.com/user-attachments/assets/c132530c-9c38-47b6-be61-256c9d5f829e" />
+<img width="712" height="110" alt="Captura de pantalla 2025-10-01 150638" src="https://github.com/user-attachments/assets/5b04cf96-fa33-4cf4-82ad-4508c05b7554" />
 
 - Al cerrar **`page1`**:
 
@@ -197,5 +197,6 @@ Esto confirma que **el servidor asocia cada URL exactamente con las rutas defini
 - El ID cambia según la pestaña o cliente que se conecte.
 - Cuando se cierra una pestaña, la terminal muestra claramente el mensaje de desconexión con el mismo ID asignado a esa conexión, confirmando el seguimiento individual de cada cliente.
 - Esto evidencia cómo Socket.IO gestiona múltiples conexiones simultáneas, diferenciando a los clientes por su ID.
+
 
 
