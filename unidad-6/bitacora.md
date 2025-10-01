@@ -156,17 +156,46 @@ Al ejecutar las pruebas y abrir las páginas **page1** y **page2**, el servidor 
 
 <img width="560" height="198" alt="Captura de pantalla 2025-09-26 153452" src="https://github.com/user-attachments/assets/0de8ed10-3ef6-492e-8594-82ff182d9faf" />
 
+**Experimento 1:**
 
+- Al intentar abrir **`/page1`**, el navegador mostró el mensaje:
 
+<img width="991" height="160" alt="Captura de pantalla 2025-10-01 144345" src="https://github.com/user-attachments/assets/8a47212a-7476-4e02-af42-2595c767a35d" />
 
+- Al abrir **`/pagina_uno`**, la página cargó correctamente (círculo y línea en rojo):
 
+<img width="1452" height="907" alt="Captura de pantalla 2025-10-01 144403" src="https://github.com/user-attachments/assets/92771ec4-57d8-4ebc-b05b-a168054e1c9c" />
 
+- El servidor **no reconoció la ruta antigua (`/page1`)** porque ya no existe en el código.
+- Al cambiar la definición de la ruta en el archivo `server.js`, el servidor solo responde a esa ruta exacta:
 
+  ```js
+  app.get('/pagina_uno', (req, res) => { ... });
+  ```
 
+Esto confirma que **el servidor asocia cada URL exactamente con las rutas definidas en el código**. Si la ruta no existe, responde con el error `Cannot GET`.
 
+### Experimento 2:
 
+- Al abrir **`page1`**:
 
+<img width="685" height="86" alt="Captura de pantalla 2025-10-01 145149" src="https://github.com/user-attachments/assets/ff2f8343-2ee1-4396-880d-4279f50d1723" />
 
+- Al abrir  **`page2`**:
 
+<img width="669" height="113" alt="Captura de pantalla 2025-10-01 145220" src="https://github.com/user-attachments/assets/c132530c-9c38-47b6-be61-256c9d5f829e" />
+
+- Al cerrar **`page1`**:
+
+<img width="313" height="16" alt="Captura de pantalla 2025-10-01 145329" src="https://github.com/user-attachments/assets/3ba7d36c-b547-42ae-84b4-86bfff9b1b22" />
+
+- Al cerrar **`page2`**:
+
+<img width="313" height="17" alt="Captura de pantalla 2025-10-01 145337" src="https://github.com/user-attachments/assets/430d3e7e-4e47-4a19-afaf-6cbb760513bd" />
+
+- Cada vez que un cliente se conecta, el servidor asigna un ID único.
+- El ID cambia según la pestaña o cliente que se conecte.
+- Cuando se cierra una pestaña, la terminal muestra claramente el mensaje de desconexión con el mismo ID asignado a esa conexión, confirmando el seguimiento individual de cada cliente.
+- Esto evidencia cómo Socket.IO gestiona múltiples conexiones simultáneas, diferenciando a los clientes por su ID.
 
 
