@@ -243,7 +243,7 @@ Al iniciar el servidor con el puerto cambiado a **3001**:
 <img width="1917" height="523" alt="Captura de pantalla 2025-10-01 153634" src="https://github.com/user-attachments/assets/92efe4a1-49cf-4b25-8ed1-d65236830283" />
 <img width="1916" height="629" alt="Captura de pantalla 2025-10-01 153649" src="https://github.com/user-attachments/assets/8197149a-263c-4d01-a860-a2c75c25be62" />
 <img width="1916" height="538" alt="Captura de pantalla 2025-10-01 153711" src="https://github.com/user-attachments/assets/43f02a5f-390f-4948-8d8e-2c1f199b4774" />
-<img width="684" height="87" alt="Captura de pantalla 2025-10-01 151842" src="https://github.com/user-attachments/assets/2425a3c7-ef53-4e62-96d4-304c95a1e9cf" />
+
 
 
 
