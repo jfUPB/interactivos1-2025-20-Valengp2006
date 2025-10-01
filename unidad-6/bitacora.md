@@ -217,6 +217,27 @@ Luego de haber modificado el código:
 - Esto demuestra cómo el servidor actúa como intermediario entre los clientes, asegurando que compartan estado y mantengan la coherencia en la comunicación en tiempo real.
 
 
+### Experimento 4:
+
+Al abrir **`http://localhost:3000/page1`**:
+
+<img width="988" height="662" alt="Captura de pantalla 2025-10-01 151810" src="https://github.com/user-attachments/assets/e3e23c64-954e-498b-9a66-472db270f7b3" />
+
+Al abrir **`http://localhost:3001/page1`**:
+
+<img width="994" height="479" alt="Captura de pantalla 2025-10-01 151817" src="https://github.com/user-attachments/assets/b65b0e9a-c65b-4848-9503-d28aec3658fe" />
+
+Al iniciar el servidor con el puerto cambiado a **3001**:
+
+<img width="684" height="87" alt="Captura de pantalla 2025-10-01 151842" src="https://github.com/user-attachments/assets/08cf4979-9132-4419-b4be-3e1d2e8f28ee" />
+
+- Cuando cambiamos la constante `port` a **3001**, el servidor deja de escuchar en `3000` y solo responde en `3001`.
+- Esto demuestra que **la variable `port` define dónde escucha el servidor**, y que la función `server.listen(port)` abre la conexión en ese puerto específico.
+- Si intentas conectarte a un puerto incorrecto, simplemente no habrá servidor respondiendo.
+
+
+
+
 
 
 
