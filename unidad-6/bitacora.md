@@ -198,6 +198,24 @@ Al cerrar **`page2`**:
 - Cuando se cierra una pestaña, la terminal muestra claramente el mensaje de desconexión con el mismo ID asignado a esa conexión, confirmando el seguimiento individual de cada cliente.
 - Esto evidencia cómo Socket.IO gestiona múltiples conexiones simultáneas, diferenciando a los clientes por su ID.
 
+### Experimento 3:
+
+Al abrir el programa antes de modificar el código:
+
+<img width="690" height="196" alt="Captura de pantalla 2025-10-01 145822" src="https://github.com/user-attachments/assets/2e7fa029-4aa4-42c3-a7f7-c86b354ca477" />
+
+Luego de haber modificado el código:
+
+<img width="694" height="293" alt="Captura de pantalla 2025-10-01 150337" src="https://github.com/user-attachments/assets/6ba2905a-0a7a-45f0-966e-64d2c141d9f2" />
+
+<img width="1788" height="988" alt="Captura de pantalla 2025-10-01 150040" src="https://github.com/user-attachments/assets/54456b08-4400-40b4-a8bd-c977dab03798" />
+
+- Cada cliente que se conecta envía su información de ventana (posición y tamaño) al servidor.
+- El servidor recibe los datos y mantiene un estado compartido que refleja qué clientes están en page1 y en page2.
+- En la consola se observa cómo, al conectarse dos clientes, el servidor muestra Page1: 1, Page2: 1 y luego All clients are fully synced, lo que indica que ambos enviaron su información y la sincronización está completa.
+- En el navegador, page1 visualiza los dos nodos conectados por una línea (relación entre clientes), mientras que page2 muestra únicamente su propio círculo.
+- Esto demuestra cómo el servidor actúa como intermediario entre los clientes, asegurando que compartan estado y mantengan la coherencia en la comunicación en tiempo real.
+
 
 
 
