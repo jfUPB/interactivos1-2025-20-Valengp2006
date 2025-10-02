@@ -267,10 +267,39 @@ Al volver a iniciar el servidor y refrescar page2.html:
 
 Cuando el servidor está apagado, el cliente no logra establecer la conexión y muestra errores de red. Al reiniciar el servidor, la comunicación se restablece automáticamente. Esto demuestra que la conexión cliente-servidor en Socket.IO depende de que el servidor esté escuchando en el puerto configurado.
 
+### Experimento 2:
 
+Al comenttar la función:
 
+<img width="495" height="284" alt="Captura de pantalla 2025-10-02 a la(s) 2 15 22 p m" src="https://github.com/user-attachments/assets/4fbe39d9-78e8-4946-9c25-30804cee1c31" />
 
+En page2.js, los resultados fueron los siguientes:
 
+<img width="1344" height="483" alt="Captura de pantalla 2025-10-02 a la(s) 2 12 56 p m" src="https://github.com/user-attachments/assets/e69a7a1f-b564-4eb4-818c-44e3d928d694" />
+
+- Page1 se queda mostrando “Sincronizando datos…”.
+- Page2 se queda mostrando “Esperando conexión de la otra ventana…”.
+- Ninguna de las páginas logra sincronizarse, ya que page2 nunca envía al servidor su estado inicial.
+
+Esto demuestra que la instrucción socket.emit('win2update', ...) es esencial para que el servidor reconozca a page2 y coordine la sincronización entre ambas ventanas.
+
+### Experimento 3:
+
+Al abrir page1 y page2, ambas ventanas logran conectarse y sincronizarse correctamente:
+
+<img width="1344" height="483" alt="Captura de pantalla 2025-10-02 a la(s) 2 12 56 p m" src="https://github.com/user-attachments/assets/fd751267-ed46-4a10-a60e-0e34300752a4" />
+
+En la terminal del servidor se reflejan las conexiones y el estado de sincronización:
+
+<img width="495" height="284" alt="Captura de pantalla 2025-10-02 a la(s) 2 15 22 p m" src="https://github.com/user-attachments/assets/29cece73-3d08-4aa6-96e8-aeb771629513" />
+
+- En las consolas de page1 y page2 aparecen mensajes como:
+- Received valid remote data: {...}
+- Sync status: SYNCED.
+- Cada vez que se mueve una de las ventanas, la otra recibe los datos actualizados de posición y tamaño.
+- El servidor confirma con el mensaje `All clients are fully synced` que ambas páginas están conectadas y sincronizadas.
+
+Esto demuestra que el servidor está gestionando la comunicación en tiempo real entre los dos clientes, asegurando que cada cambio en una ventana se refleje en la otra.
 
 
 
