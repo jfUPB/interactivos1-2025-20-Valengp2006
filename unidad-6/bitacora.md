@@ -301,5 +301,18 @@ En la terminal del servidor se reflejan las conexiones y el estado de sincroniza
 
 Esto demuestra que el servidor está gestionando la comunicación en tiempo real entre los dos clientes, asegurando que cada cambio en una ventana se refleje en la otra.
 
+### Experimento 4:
+
+En page2.js, dentro de la función checkWindowPosition(), se agregó un console.log dentro del bloque del if para verificar si se ejecutaba cuando la ventana cambiaba de posición o tamaño.
+
+En la consola, los resultados fueron los siguientes:
+
+<img width="1126" height="604" alt="image" src="https://github.com/user-attachments/assets/b5d20221-32ec-4b54-97d4-be15ec9cea43" />
+
+- El servidor reconoce a los dos clientes conectados (Page1 y Page2) y muestra que ambos están sincronizados.
+- Cada vez que se mueve o redimensiona la ventana, se registra un nuevo evento con sus coordenadas y dimensiones (x, y, width, height).
+- Esto confirma que el bloque if de checkWindowPosition() se ejecuta correctamente y controla qué datos se envían al servidor.
+
+En conclusión, este experimento demuestra que la condición dentro de checkWindowPosition() es fundamental para detectar cambios en tiempo real y mantener la sincronización eficiente entre las ventanas.
 
 
