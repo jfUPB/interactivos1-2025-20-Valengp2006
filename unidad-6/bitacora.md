@@ -249,6 +249,7 @@ Al abrir page2.html con el servidor corriendo:
 Al detener el servidor y refrescar page2.html:
 
 <img width="1917" height="523" alt="Captura de pantalla 2025-10-01 153634" src="https://github.com/user-attachments/assets/92efe4a1-49cf-4b25-8ed1-d65236830283" />
+<img width="1916" height="629" alt="Captura de pantalla 2025-10-01 153649" src="https://github.com/user-attachments/assets/8197149a-263c-4d01-a860-a2c75c25be62" />
 
 - La página muestra errores de conexión.
 - En la consola del navegador aparecen mensajes como GET http://localhost:3000/socket.io/... net::ERR_CONNECTION_REFUSED, indicando que el cliente no puede comunicarse con el servidor.
@@ -256,7 +257,7 @@ Al detener el servidor y refrescar page2.html:
 
 Al volver a iniciar el servidor y refrescar page2.html:
 
-<img width="1916" height="629" alt="Captura de pantalla 2025-10-01 153649" src="https://github.com/user-attachments/assets/8197149a-263c-4d01-a860-a2c75c25be62" />
+<img width="1916" height="538" alt="Captura de pantalla 2025-10-01 153711" src="https://github.com/user-attachments/assets/43f02a5f-390f-4948-8d8e-2c1f199b4774" />
 
 - Los errores desaparecen.
 - El cliente logra reconectarse y vuelve a mostrar los datos de sincronización en consola.
@@ -267,7 +268,6 @@ Al volver a iniciar el servidor y refrescar page2.html:
 Cuando el servidor está apagado, el cliente no logra establecer la conexión y muestra errores de red. Al reiniciar el servidor, la comunicación se restablece automáticamente. Esto demuestra que la conexión cliente-servidor en Socket.IO depende de que el servidor esté escuchando en el puerto configurado.
 
 
-<img width="1916" height="538" alt="Captura de pantalla 2025-10-01 153711" src="https://github.com/user-attachments/assets/43f02a5f-390f-4948-8d8e-2c1f199b4774" />
 
 
 
