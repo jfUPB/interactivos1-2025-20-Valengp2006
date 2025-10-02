@@ -569,6 +569,45 @@ Con este proyecto logré:
 [Enlace al repositorio de `real-time-garden`](https://github.com/Valengp2006/real-time-garden)
 
 
+## Autoevaluación – Unidad 6
 
+**Actividades cumplidas**
 
+1. **Actividad 01: Instalación y preparación del entorno:**
+    - Documenté paso a paso la instalación de Node.js, npm y la infraestructura base de comunicación.
+    - Incluí capturas de pantalla como evidencia.
+$\color{green}{\text{✔️ Actividad completa.}}$
+
+2. **Actividad 02: Pruebas de la infraestructura:**
+   - Probé el caso de estudio base (cliente/servidor).
+   - Analicé el funcionamiento y registré los resultados.
+$\color{green}{\text{✔️ Actividad completa.}}$
+
+3. **Actividad 03: Documentación de evidencias (experimentos, errores, solución de problemas):**
+   - Registré los problemas que surgieron (errores en server.js, divergencia de ramas en Git, etc.).
+   - Documenté cómo se resolvieron con conclusiones claras.
+$\color{green}{\text{✔️ Actividad completa.}}$
+
+4. **Actividad 04: Diseño de una aplicación original:**
+    - Ideé y boceté el Jardín Ecológico Interactivo en tiempo real.
+	- Expliqué la idea, la motivación y la diferencia con el caso base.
+$\color{green}{\text{✔️ Actividad completa.}}$
+
+5. **Actividad 05: Implementación de la aplicación original:**
+    - Implementé el sistema cliente/servidor (server.js, garden.js, spectator.js).
+    - Verifiqué que funciona correctamente con múltiples clientes en tiempo real.
+    - Registré los códigos completos en la bitácora.
+$\color{green}{\text{✔️ Actividad completa.}}$
+
+**Nota propuesta según rúbrica: 5.0**
+
+**Defensa de la nota:**
+
+- Realicé las 5 actividades completas pedidas en la unidad.
+- Documenté paso a paso todo el proceso (incluso los errores y cómo los solucioné).
+- Expliqué con detalle la idea original, con bocetos, implementación y conclusiones.
+- Incluí todo el código fuente del proyecto final en la bitácora.
+- Además, realicé esta autoevaluación justificada.
+
+Por lo tanto, considero que cumplo con el máximo nivel de la rúbrica: 5.
 
