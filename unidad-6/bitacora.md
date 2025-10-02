@@ -315,4 +315,21 @@ En la consola, los resultados fueron los siguientes:
 
 En conclusión, este experimento demuestra que la condición dentro de checkWindowPosition() es fundamental para detectar cambios en tiempo real y mantener la sincronización eficiente entre las ventanas.
 
+### Experimento 5:
+
+En el `.js` de cada página, dentro de la función draw(), se reemplazó la instrucción background(220) por un cálculo dinámico dependiente de la distancia entre el centro de la ventana local y la ventana remota:
+
+<img width="929" height="100" alt="Captura de pantalla 2025-10-02 a la(s) 3 58 28 p m" src="https://github.com/user-attachments/assets/a2f82a65-f286-41c4-ac19-e7e9da5ef6d5" />
+
+En la práctica, los resultados fueron los siguientes:
+
+Uploading Grabación de pantalla 2025-10-02 a la(s) 3.51.59 p.m..mov…
+
+- Cuando las ventanas están muy cerca, el fondo se mantiene claro.
+- A medida que aumenta la distancia entre las ventanas, el fondo se oscurece gradualmente.
+- Los círculos que representan las posiciones de cada ventana continúan mostrándose y conectados por la línea, pero ahora el fondo actúa como una retroalimentación visual de la separación entre ambas.
+
+En conclusión, este experimento demuestra que la magnitud de la distancia puede traducirse en un cambio visual directo, lo cual enriquece la interacción y ofrece una forma intuitiva de representar datos compartidos entre clientes.
+
+
 
