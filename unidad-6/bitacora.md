@@ -323,13 +323,14 @@ En el `.js` de cada página, dentro de la función draw(), se reemplazó la inst
 
 En la práctica, los resultados fueron los siguientes:
 
-![Grabación de pantalla 2025-10-02 a la(s) 3 51 59 p m](https://github.com/user-attachments/assets/c1bd6611-9d47-47da-b4df-dc279cbceb49)
+![Grabación de pantalla 2025-10-02 a la(s) 3 51 59 p m](https://github.com/user-attachments/assets/7669296f-9876-4045-b507-0664057c9697)
 
 - Cuando las ventanas están muy cerca, el fondo se mantiene claro.
 - A medida que aumenta la distancia entre las ventanas, el fondo se oscurece gradualmente.
 - Los círculos que representan las posiciones de cada ventana continúan mostrándose y conectados por la línea, pero ahora el fondo actúa como una retroalimentación visual de la separación entre ambas.
 
 En conclusión, este experimento demuestra que la magnitud de la distancia puede traducirse en un cambio visual directo, lo cual enriquece la interacción y ofrece una forma intuitiva de representar datos compartidos entre clientes.
+
 
 
 
