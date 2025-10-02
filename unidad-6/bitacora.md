@@ -331,6 +331,242 @@ En la práctica, los resultados fueron los siguientes:
 
 En conclusión, este experimento demuestra que la magnitud de la distancia puede traducirse en un cambio visual directo, lo cual enriquece la interacción y ofrece una forma intuitiva de representar datos compartidos entre clientes.
 
+## Actividad 05 - 02/10/2025
+
+### 1. Idea
+
+Basado en la infraestructura de comunicación en tiempo real (Node.js, Express y Socket.IO), diseñé una aplicación completamente nueva y diferente al caso de estudio original.
+
+Mi propuesta se llama:
+
+“Jardín Ecológico Interactivo”
+
+La idea es que varios usuarios puedan conectarse simultáneamente a un espacio compartido en línea que funciona como un jardín virtual.
+
+- Cada usuario puede plantar semillas haciendo clic en el jardín.
+- Otro rol posible es el de espectador, que observa en tiempo real cómo evoluciona el jardín (sin interactuar).
+- Todos los usuarios ven las acciones de los demás de forma sincronizada.
+
+La propuesta no es simplemente cambiar la apariencia del ejemplo, sino crear una experiencia original y colaborativa, que promueva la idea de cuidado del medio ambiente de manera lúdica.
+
+### 2. Bocetos
+
+Boceto del diseño conceptual:
+
+- **Espacio del jardín:** un lienzo oscuro donde los usuarios plantan semillas.
+- **Plantas:** representadas como círculos verdes que aparecen al hacer clic.
+- **Controles:**
+  - Click → plantar.
+  - Botones para “Limpiar jardín” y “Abrir espectador”.
+- **Modo espectador:** solo observa el jardín en vivo.
+
+<img width="1348" height="774" alt="Captura de pantalla 2025-10-02 a la(s) 5 47 30 p m" src="https://github.com/user-attachments/assets/1e1099c5-3dd5-455e-822d-0c0041ad07a1" />
+
+<img width="491" height="253" alt="Captura de pantalla 2025-10-02 a la(s) 5 48 11 p m" src="https://github.com/user-attachments/assets/a936c45d-e674-4aae-9710-56b7473046b7" />
+
+### 3. Implementación
+
+La aplicación se construyó usando:
+
+- Servidor con Node.js + Express.
+- Comunicación en tiempo real con Socket.IO.
+- Interfaz cliente con HTML5 Canvas + JavaScript.
+- **Dos roles:** usuario (interactivo) y espectador (observador).
+
+### 4. Código
+
+`server.js`
+
+```js
+const express = require("express");
+const http = require("http");
+const { Server } = require("socket.io");
+const path = require("path");
+
+const app = express();
+const server = http.createServer(app);
+const io = new Server(server);
+
+// Servir archivos estáticos
+app.use(express.static(path.join(__dirname, "public")));
+
+let plants = [];
+
+// Conexión de usuarios
+io.on("connection", (socket) => {
+  console.log("Nuevo usuario conectado:", socket.id);
+
+  // Enviar estado inicial del jardín
+  socket.emit("init", plants);
+
+  // Evento de plantar
+  socket.on("plant", (data) => {
+    plants.push(data);
+    io.emit("plant", data);
+  });
+
+  // Evento de empujar plantas
+  socket.on("move", (data) => {
+    plants = plants.map((p) =>
+      p.id === data.id ? { ...p, x: data.x, y: data.y } : p
+    );
+    io.emit("move", data);
+  });
+
+  // Evento de limpiar jardín
+  socket.on("clear", () => {
+    plants = [];
+    io.emit("clear");
+  });
+
+  socket.on("disconnect", () => {
+    console.log("Usuario desconectado:", socket.id);
+  });
+});
+
+server.listen(3000, () => {
+  console.log("Servidor corriendo en http://localhost:3000");
+});
+```
+
+`public/garden.html`
+
+```html
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Jardín Ecológico — Garden</title>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="garden.js" defer></script>
+  <style>
+    body { margin:0; background:#0a1a2f; color:white; font-family:sans-serif; }
+    canvas { display:block; background:#001f3f; margin:auto; }
+    #controls { padding:10px; text-align:center; }
+  </style>
+</head>
+<body>
+  <div id="controls">
+    <button id="clearBtn">Limpiar Jardín</button>
+    <button onclick="window.open('spectator.html')">Abrir Espectador</button>
+    | Click = plantar • Hold+move = empujar
+  </div>
+  <canvas id="gardenCanvas" width="800" height="500"></canvas>
+</body>
+</html>
+```
+
+`public/garden.js`
+
+```js
+const socket = io();
+const canvas = document.getElementById("gardenCanvas");
+const ctx = canvas.getContext("2d");
+
+let plants = [];
+
+// Dibujar planta
+function drawPlant(x, y) {
+  ctx.fillStyle = "limegreen";
+  ctx.beginPath();
+  ctx.arc(x, y, 10, 0, Math.PI * 2);
+  ctx.fill();
+}
+
+// Redibujar todo
+function redraw() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  for (let p of plants) {
+    drawPlant(p.x, p.y);
+  }
+}
+
+// Escuchar eventos del servidor
+socket.on("init", (data) => { plants = data; redraw(); });
+socket.on("plant", (data) => { plants.push(data); redraw(); });
+socket.on("move", (data) => {
+  plants = plants.map(p => p.id === data.id ? data : p);
+  redraw();
+});
+socket.on("clear", () => { plants = []; redraw(); });
+
+// Interacciones del usuario
+canvas.addEventListener("click", (e) => {
+  const x = e.offsetX, y = e.offsetY;
+  const plant = { id: Date.now(), x, y };
+  socket.emit("plant", plant);
+});
+
+document.getElementById("clearBtn").addEventListener("click", () => {
+  socket.emit("clear");
+});
+```
+
+`public/spectator.html`
+```html
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Espectador — Jardín</title>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="spectator.js" defer></script>
+  <style>
+    body { margin:0; background:#002d19; }
+    canvas { display:block; background:#004d26; margin:auto; }
+  </style>
+</head>
+<body>
+  <canvas id="spectatorCanvas" width="800" height="500"></canvas>
+</body>
+</html>
+```
+
+`public/spectator.js`
+
+```js
+const socket = io();
+const canvas = document.getElementById("spectatorCanvas");
+const ctx = canvas.getContext("2d");
+
+let plants = [];
+
+// Dibujar planta
+function drawPlant(x, y) {
+  ctx.fillStyle = "limegreen";
+  ctx.beginPath();
+  ctx.arc(x, y, 10, 0, Math.PI * 2);
+  ctx.fill();
+}
+
+// Redibujar todo
+function redraw() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  for (let p of plants) {
+    drawPlant(p.x, p.y);
+  }
+}
+
+// Escuchar eventos del servidor
+socket.on("init", (data) => { plants = data; redraw(); });
+socket.on("plant", (data) => { plants.push(data); redraw(); });
+socket.on("move", (data) => {
+  plants = plants.map(p => p.id === data.id ? data : p);
+  redraw();
+});
+socket.on("clear", () => { plants = []; redraw(); });
+```
+
+### 5. Conclusión 
+
+Con este proyecto logré:
+
+- Usar tecnología de comunicación en tiempo real (Socket.IO).
+- Diseñar una experiencia original y colaborativa distinta al ejemplo.
+- Permitir la interacción de múltiples usuarios simultáneamente.
+- Explorar conceptos creativos ligados al medio ambiente.
+
+[Enlace al repositorio de `real-time-garden`](https://github.com/Valengp2006/real-time-garden)
 
 
 
