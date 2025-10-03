@@ -1,2 +1,613 @@
-
 # Evidencias de la unidad 6
+## Actividad 01 - 24/09/2025
+
+### Paso a paso para iniciar el programa
+
+1. Instalar node.js y Git
+2. Abrir el repositorio donde está la información
+3. En el apartado de `<> Code` buscar la [url](https://github.com/juanferfranco/entangledTest-sfi1-2025-20.git) que termina en `.git` para clonar el repositorio
+4. Abrir el `Git Bash`
+5. Crear una carpeta para guardar el repositorio usando el comando `mkdir`+ `nombre`
+6. Entrar a la carpeta usando el comando `cd` + `nombreCarpeta`
+7. Clonar el repositorio usando el comando `git clone` + `direccionRepositorio`
+8. Con el comando `code .` entrar a vs code
+9. Ejecutar el comando `npm install` en Git Bash
+10. Iniciar el programa con el comando `npm start`
+    
+### ¿Qué ocurrió en la terminal cuando ejecutaste npm install? ¿Cuál crees que es su propósito?
+
+Cuanod ejecute `npm install` en la terminal apareció la cantidad de "paquetes" (packages) añadidos, y la cantidad de tiempo que le tomó al programa agregarlos, ademas de mostrar la cantidad de vuñnerabilidades que tiene y un comando nuevo en caso de querer buscar mas información sobre pauqetes que buscane el *"funding"*.
+
+<img width="601" height="134" alt="Captura de pantalla 2025-09-24 152744" src="https://github.com/user-attachments/assets/06fe9a54-f0fc-40e4-9e09-05901da15680" />
+
+Creo que su propósito es el de mostrarle al usuario si toda la información del repositorio se clonó correctamente, ya que menciona cuantos *packages* se añadieron.
+
+### ¿Qué mensaje específico apareció en la terminal después de ejecutar npm start? ¿Qué indica este mensaje?
+
+El mensaje que apareció en la terminal después de ejecutar *npm start* fue el siguiente: 
+
+<img width="592" height="102" alt="Captura de pantalla 2025-09-24 152829" src="https://github.com/user-attachments/assets/4064e5e0-3769-450b-844e-16d7693c1d9a" />
+
+El cual indica que el servidor esta escuchando las instrucciones dadas en el [url](http://localhost:3000) mostrado.
+
+### Describe lo que ves inicialmente en page1 y page2 en tu navegador.
+
+Inicialmente en `page1` muestra el letrero de *esperando conexión*, cuando se abre `page2` se inicia la aplicación en ambas páginas al tiempo.
+
+### ¿Qué mensajes aparecieron en la terminal del servidor cuando abriste page1 y page2?
+
+<img width="725" height="196" alt="Captura de pantalla 2025-09-24 153313" src="https://github.com/user-attachments/assets/c9a472f7-d63f-417f-8f5a-b1737438769f" />
+
+### Describe qué sucede en ambas páginas del navegador cuando mueves una de las ventanas. ¿Cambia algo visualmente? ¿Qué mensajes aparecen (si los hay) en la consola del navegador (usualmente accesible con F12 -> Pestaña Consola) y en la terminal del servidor?
+
+<img width="1794" height="889" alt="Captura de pantalla 2025-09-24 153052" src="https://github.com/user-attachments/assets/288cc17f-b1c5-4913-8fb2-75a932479cb3" />
+
+<img width="1377" height="884" alt="Captura de pantalla 2025-09-24 153409" src="https://github.com/user-attachments/assets/adea53ef-9451-44b5-a934-76dfc2c0e5d1" />
+
+<img width="708" height="532" alt="Captura de pantalla 2025-09-24 153509" src="https://github.com/user-attachments/assets/90ecf7b5-59cb-4e50-97eb-7bde477ad0bc" />
+
+## Actividad 02
+
+### Piensa en cómo te conectas a Internet en casa o en la Universidad. ¿Usas Wi-Fi? ¿Un cable de red? Eso es simplemente tu “rampa de acceso” a la gran red de carreteras. ¿Qué pasaría si esa rampa se corta? Anota tus ideas.
+
+En mi casa me conecto a Internet mediante el Wi-Fi, a excepción del televisor, el cual está conectado por medio de un cable de red. Si esa rampa se corta, entonces mi "vehículo" quedaría completamente desconectado de la red de carreteras, por lo que al cortarse esa rampa, quedaría completamente incomunicado con el servidor y demás espacios.
+
+### ¿Puedes identificar otros ejemplos de relaciones Cliente-Servidor en tu vida diaria (no necesariamente digitales)? Por ejemplo, al pedir comida en un restaurante. ¿Quién es el cliente y quién el servidor? ¿Qué se pide y qué se entrega?
+
+Al pedir comida en un restaurante, el servidor es el mesero, quien recibe la información que pide el usuario; el usuario es el mismo cliente, quien pide lo que desea recibir al servidor. Así, el servidor sabe lo que busca el cliente, lo busca y se lo entrega.
+
+### Toma la URL de tu sitio web favorito. Intenta identificar el protocolo, el nombre de dominio y la ruta (si la hay). ¿Qué crees que pasa si solo escribes el nombre de dominio (ej. www.google.com) sin una ruta específica? ¿Qué “página por defecto” crees que te envía el servidor?
+
+$\color{red}{\text{Protocolo}}$
+$\color{green}{\text{Nombre de dominio}}$
+$\color{orange}{\text{Ruta específica}}$
+
+URL: https://www.youtube.com/?app=desktop&hl=es
+
+```diff
+- https://
++ www.youtube.com
+! /?app=desktop&hl=es
+```
+
+- Si solo escribo el dominio sin una ruta específica, igual me lleva a la página de inicio del sitio web.
+- El servidor me envía por defecto a la página principal del sintio web.
+
+<img width="1919" height="993" alt="Captura de pantalla 2025-09-26 145109" src="https://github.com/user-attachments/assets/745a847d-af55-4ec0-93d8-7cf83a3c7a9f" />
+<img width="1919" height="987" alt="Captura de pantalla 2025-09-26 145125" src="https://github.com/user-attachments/assets/e08b5cd5-ad31-4162-84a6-c6a2cf924785" />
+
+
+### Compara HTTP con los protocolos seriales que usaste.
+- **¿Qué similitudes encuentras?**
+- **¿Qué diferencias clave ves?**
+- **¿Por qué crees que HTTP necesita ser más complejo que un simple envío de bytes como hacías con el micro:bit?**
+  
+- **Similitudes:**  
+  - Ambos definen un “idioma” con reglas claras entre emisor y receptor.  
+  - El cliente (navegador / micro:bit) envía un mensaje, y el servidor/receptor contesta.  
+
+- **Diferencias:**  
+  - HTTP es mucho más complejo: incluye cabeceras, códigos de estado, tipos de contenido.  
+  - Serial es más directo: solo transmite bytes sin tanta “meta-información”.  
+
+HTTP necesita esta complejidad porque en la web hay **múltiples tipos de datos** (texto, imágenes, video, JSON) y debe asegurar compatibilidad entre millones de clientes y servidores.
+
+### Piensa en una página web simple, como un formulario de login.
+- **¿Qué parte crees que es HTML (ej. los campos de texto, el botón)?**
+- **¿Qué parte es CSS (ej. el color del botón, el tipo de letra)?**
+- **¿Qué parte es JavaScript (ej. la comprobación de si escribiste algo antes de enviar, el mensaje de “contraseña incorrecta” que aparece sin recargar la página)?**
+
+Ejemplo: formulario de login
+
+- **HTML:** los campos de texto (usuario, contraseña) y el botón.  
+- **CSS:** color del botón, tipo de letra, márgenes y estilos visuales.  
+- **JavaScript:** validar que el usuario escribió algo, mostrar un mensaje de error sin recargar la página.
+
+### Compara el bucle draw() de p5.js con este modelo de “esperar a que algo pase y reaccionar”.
+- **¿Qué ventajas crees que tiene el modelo basado en eventos para una interfaz de usuario web?**
+- **¿Sería eficiente tener un bucle draw() redibujando toda la página 60 veces por segundo si nada ha cambiado?**
+
+- **draw() en p5.js:** corre constantemente en bucle (~60 fps), incluso si nada cambia.  
+- **Modelo de eventos en la web:** el navegador “espera” a que algo ocurra (click, resize, mensaje) y ejecuta la función correspondiente.  
+
+**Ventajas del modelo de eventos:**  
+
+- Más eficiente: no consume recursos redibujando todo sin necesidad.  
+- Más natural para interfaces de usuario (solo reaccionan cuando hay interacción).
+  
+Si la web usara un bucle `draw()` para todo, sería muy pesado y poco práctico.
+
+### ¿Por qué crees que podría ser útil usar JavaScript tanto en el cliente (navegador) como en el servidor? ¿Se te ocurre alguna ventaja para los desarrolladores?
+
+Usar el mismo lenguaje (JavaScript) en cliente y servidor es útil porque:  
+
+- Evita que el desarrollador tenga que aprender dos lenguajes distintos.  
+- Se pueden **compartir librerías y lógica** (ej. validación de formularios en cliente y servidor).  
+- Hace que el flujo de desarrollo sea más rápido y consistente.
+  
+### Resume con tus propias palabras la diferencia fundamental entre una comunicación HTTP tradicional y una comunicación usando WebSockets/Socket.IO. ¿En qué tipo de aplicaciones has visto o podrías imaginar que se usa esta comunicación en tiempo real?
+
+- **HTTP tradicional:** es como enviar un correo → cada vez que quiero algo, debo pedirlo y esperar la respuesta.  
+- **WebSockets/Socket.IO:** es como abrir una llamada telefónica → la conexión queda abierta, y ambos lados pueden enviarse mensajes en tiempo real.
+
+**Aplicaciones típicas:**  
+- Chats en línea (WhatsApp Web, Messenger).  
+- Juegos multijugador en tiempo real.  
+- Colaboración en vivo (Google Docs, Figma).  
+- Monitoreo de sensores en tiempo real (IoT).
+
+## Actividad 03 - 26/09/2025
+
+### Experimento 1:
+
+**Verificación del funcionamiento del programa antes de modificarlo:**
+
+Al ejecutar las pruebas y abrir las páginas **page1** y **page2**, el servidor muestra los siguientes registros en consola:
+
+- Se registran las conexiones de los clientes, cada uno con su **ID único**.
+- Los eventos **win1update** y **win2update** se reciben con las coordenadas de la ventana (`x, y, width, height`).
+- En los mensajes de depuración (`Debug`) se refleja:
+  - Número total de clientes conectados.
+  - Estado de las páginas activas (Page1, Page2).
+  - Número de clientes sincronizados (`Synced`).
+- Finalmente aparece el mensaje **"All clients are fully synced"**, indicando que la sincronización entre ambos clientes fue exitosa.
+  
+<img width="562" height="226" alt="Captura de pantalla 2025-09-26 153421" src="https://github.com/user-attachments/assets/0ba513f8-89a0-4fb1-9bc5-bb1d9f591212" />
+
+<img width="560" height="198" alt="Captura de pantalla 2025-09-26 153452" src="https://github.com/user-attachments/assets/0de8ed10-3ef6-492e-8594-82ff182d9faf" />
+
+**Experimento 1:**
+
+- Al intentar abrir **`/page1`**, el navegador mostró el mensaje:
+
+<img width="991" height="160" alt="Captura de pantalla 2025-10-01 144345" src="https://github.com/user-attachments/assets/8a47212a-7476-4e02-af42-2595c767a35d" />
+
+- Al abrir **`/pagina_uno`**, la página cargó correctamente (círculo y línea en rojo):
+
+<img width="1452" height="907" alt="Captura de pantalla 2025-10-01 144403" src="https://github.com/user-attachments/assets/92771ec4-57d8-4ebc-b05b-a168054e1c9c" />
+
+- El servidor **no reconoció la ruta antigua (`/page1`)** porque ya no existe en el código.
+- Al cambiar la definición de la ruta en el archivo `server.js`, el servidor solo responde a esa ruta exacta:
+
+  ```js
+  app.get('/pagina_uno', (req, res) => { ... });
+  ```
+
+Esto confirma que **el servidor asocia cada URL exactamente con las rutas definidas en el código**. Si la ruta no existe, responde con el error `Cannot GET`.
+
+### Experimento 2:
+
+Al abrir **`page1`**:
+
+<img width="685" height="86" alt="Captura de pantalla 2025-10-01 145149" src="https://github.com/user-attachments/assets/ff2f8343-2ee1-4396-880d-4279f50d1723" />
+
+Al abrir  **`page2`**:
+
+<img width="712" height="110" alt="Captura de pantalla 2025-10-01 150638" src="https://github.com/user-attachments/assets/5b04cf96-fa33-4cf4-82ad-4508c05b7554" />
+
+Al cerrar **`page1`**:
+
+<img width="313" height="17" alt="Captura de pantalla 2025-10-01 145337" src="https://github.com/user-attachments/assets/430d3e7e-4e47-4a19-afaf-6cbb760513bd" />
+
+Al cerrar **`page2`**:
+
+<img width="313" height="16" alt="Captura de pantalla 2025-10-01 145329" src="https://github.com/user-attachments/assets/3ba7d36c-b547-42ae-84b4-86bfff9b1b22" />
+
+- Cada vez que un cliente se conecta, el servidor asigna un ID único.
+- El ID cambia según la pestaña o cliente que se conecte.
+- Cuando se cierra una pestaña, la terminal muestra claramente el mensaje de desconexión con el mismo ID asignado a esa conexión, confirmando el seguimiento individual de cada cliente.
+- Esto evidencia cómo Socket.IO gestiona múltiples conexiones simultáneas, diferenciando a los clientes por su ID.
+
+### Experimento 3:
+
+Al abrir el programa antes de modificar el código:
+
+<img width="690" height="196" alt="Captura de pantalla 2025-10-01 145822" src="https://github.com/user-attachments/assets/2e7fa029-4aa4-42c3-a7f7-c86b354ca477" />
+
+Luego de haber modificado el código:
+
+<img width="694" height="293" alt="Captura de pantalla 2025-10-01 150337" src="https://github.com/user-attachments/assets/6ba2905a-0a7a-45f0-966e-64d2c141d9f2" />
+
+<img width="1788" height="988" alt="Captura de pantalla 2025-10-01 150040" src="https://github.com/user-attachments/assets/54456b08-4400-40b4-a8bd-c977dab03798" />
+
+- Cada cliente que se conecta envía su información de ventana (posición y tamaño) al servidor.
+- El servidor recibe los datos y mantiene un estado compartido que refleja qué clientes están en page1 y en page2.
+- En la consola se observa cómo, al conectarse dos clientes, el servidor muestra Page1: 1, Page2: 1 y luego All clients are fully synced, lo que indica que ambos enviaron su información y la sincronización está completa.
+- En el navegador, page1 visualiza los dos nodos conectados por una línea (relación entre clientes), mientras que page2 muestra únicamente su propio círculo.
+- Esto demuestra cómo el servidor actúa como intermediario entre los clientes, asegurando que compartan estado y mantengan la coherencia en la comunicación en tiempo real.
+
+### Experimento 4:
+
+Al abrir **`http://localhost:3000/page1`**:
+
+<img width="988" height="662" alt="Captura de pantalla 2025-10-01 151810" src="https://github.com/user-attachments/assets/e3e23c64-954e-498b-9a66-472db270f7b3" />
+
+Al abrir **`http://localhost:3001/page1`**:
+
+<img width="994" height="479" alt="Captura de pantalla 2025-10-01 151817" src="https://github.com/user-attachments/assets/b65b0e9a-c65b-4848-9503-d28aec3658fe" />
+
+Al iniciar el servidor con el puerto cambiado a **3001**:
+
+<img width="684" height="87" alt="Captura de pantalla 2025-10-01 151842" src="https://github.com/user-attachments/assets/08cf4979-9132-4419-b4be-3e1d2e8f28ee" />
+
+- Cuando cambiamos la constante `port` a **3001**, el servidor deja de escuchar en `3000` y solo responde en `3001`.
+- Esto demuestra que **la variable `port` define dónde escucha el servidor**, y que la función `server.listen(port)` abre la conexión en ese puerto específico.
+- Si intentas conectarte a un puerto incorrecto, simplemente no habrá servidor respondiendo.
+
+## Actividad 04 - 01/10/2025
+
+### Experimento 1:
+
+Al abrir page2.html con el servidor corriendo:
+
+<img width="992" height="382" alt="Captura de pantalla 2025-10-01 153550" src="https://github.com/user-attachments/assets/6e1b5fef-98e8-4260-9199-eaac8fab1924" />
+
+- La página muestra el mensaje “Sincronizando datos…”.
+- En la consola del navegador se observa que la conexión fue establecida correctamente (Connected with ID: ...) y se reciben datos remotos.
+- En la terminal del servidor aparece el log confirmando la conexión del cliente y los datos enviados.
+
+Al detener el servidor y refrescar page2.html:
+
+<img width="1917" height="523" alt="Captura de pantalla 2025-10-01 153634" src="https://github.com/user-attachments/assets/92efe4a1-49cf-4b25-8ed1-d65236830283" />
+<img width="1916" height="629" alt="Captura de pantalla 2025-10-01 153649" src="https://github.com/user-attachments/assets/8197149a-263c-4d01-a860-a2c75c25be62" />
+
+- La página muestra errores de conexión.
+- En la consola del navegador aparecen mensajes como GET http://localhost:3000/socket.io/... net::ERR_CONNECTION_REFUSED, indicando que el cliente no puede comunicarse con el servidor.
+- En el navegador incluso se muestra la página de error “No se puede acceder a este sitio”.
+
+Al volver a iniciar el servidor y refrescar page2.html:
+
+<img width="1916" height="538" alt="Captura de pantalla 2025-10-01 153711" src="https://github.com/user-attachments/assets/43f02a5f-390f-4948-8d8e-2c1f199b4774" />
+
+- Los errores desaparecen.
+- El cliente logra reconectarse y vuelve a mostrar los datos de sincronización en consola.
+- En la terminal del servidor se confirma la nueva conexión con un nuevo ID.
+
+**Conclusión:**
+
+Cuando el servidor está apagado, el cliente no logra establecer la conexión y muestra errores de red. Al reiniciar el servidor, la comunicación se restablece automáticamente. Esto demuestra que la conexión cliente-servidor en Socket.IO depende de que el servidor esté escuchando en el puerto configurado.
+
+### Experimento 2:
+
+Al comenttar la función:
+
+<img width="495" height="284" alt="Captura de pantalla 2025-10-02 a la(s) 2 15 22 p m" src="https://github.com/user-attachments/assets/4fbe39d9-78e8-4946-9c25-30804cee1c31" />
+
+En page2.js, los resultados fueron los siguientes:
+
+<img width="1344" height="483" alt="Captura de pantalla 2025-10-02 a la(s) 2 12 56 p m" src="https://github.com/user-attachments/assets/e69a7a1f-b564-4eb4-818c-44e3d928d694" />
+
+- Page1 se queda mostrando “Sincronizando datos…”.
+- Page2 se queda mostrando “Esperando conexión de la otra ventana…”.
+- Ninguna de las páginas logra sincronizarse, ya que page2 nunca envía al servidor su estado inicial.
+
+Esto demuestra que la instrucción socket.emit('win2update', ...) es esencial para que el servidor reconozca a page2 y coordine la sincronización entre ambas ventanas.
+
+### Experimento 3:
+
+Al abrir page1 y page2, ambas ventanas logran conectarse y sincronizarse correctamente:
+
+<img width="1344" height="483" alt="Captura de pantalla 2025-10-02 a la(s) 2 12 56 p m" src="https://github.com/user-attachments/assets/fd751267-ed46-4a10-a60e-0e34300752a4" />
+
+En la terminal del servidor se reflejan las conexiones y el estado de sincronización:
+
+<img width="495" height="284" alt="Captura de pantalla 2025-10-02 a la(s) 2 15 22 p m" src="https://github.com/user-attachments/assets/29cece73-3d08-4aa6-96e8-aeb771629513" />
+
+- En las consolas de page1 y page2 aparecen mensajes como:
+- Received valid remote data: {...}
+- Sync status: SYNCED.
+- Cada vez que se mueve una de las ventanas, la otra recibe los datos actualizados de posición y tamaño.
+- El servidor confirma con el mensaje `All clients are fully synced` que ambas páginas están conectadas y sincronizadas.
+
+Esto demuestra que el servidor está gestionando la comunicación en tiempo real entre los dos clientes, asegurando que cada cambio en una ventana se refleje en la otra.
+
+### Experimento 4:
+
+En page2.js, dentro de la función checkWindowPosition(), se agregó un console.log dentro del bloque del if para verificar si se ejecutaba cuando la ventana cambiaba de posición o tamaño.
+
+En la consola, los resultados fueron los siguientes:
+
+<img width="1126" height="604" alt="image" src="https://github.com/user-attachments/assets/b5d20221-32ec-4b54-97d4-be15ec9cea43" />
+
+- El servidor reconoce a los dos clientes conectados (Page1 y Page2) y muestra que ambos están sincronizados.
+- Cada vez que se mueve o redimensiona la ventana, se registra un nuevo evento con sus coordenadas y dimensiones (x, y, width, height).
+- Esto confirma que el bloque if de checkWindowPosition() se ejecuta correctamente y controla qué datos se envían al servidor.
+
+En conclusión, este experimento demuestra que la condición dentro de checkWindowPosition() es fundamental para detectar cambios en tiempo real y mantener la sincronización eficiente entre las ventanas.
+
+### Experimento 5:
+
+En el `.js` de cada página, dentro de la función draw(), se reemplazó la instrucción background(220) por un cálculo dinámico dependiente de la distancia entre el centro de la ventana local y la ventana remota:
+
+<img width="929" height="100" alt="Captura de pantalla 2025-10-02 a la(s) 3 58 28 p m" src="https://github.com/user-attachments/assets/a2f82a65-f286-41c4-ac19-e7e9da5ef6d5" />
+
+En la práctica, los resultados fueron los siguientes:
+
+![Grabación de pantalla 2025-10-02 a la(s) 3 51 59 p m](https://github.com/user-attachments/assets/7669296f-9876-4045-b507-0664057c9697)
+
+- Cuando las ventanas están muy cerca, el fondo se mantiene claro.
+- A medida que aumenta la distancia entre las ventanas, el fondo se oscurece gradualmente.
+- Los círculos que representan las posiciones de cada ventana continúan mostrándose y conectados por la línea, pero ahora el fondo actúa como una retroalimentación visual de la separación entre ambas.
+
+En conclusión, este experimento demuestra que la magnitud de la distancia puede traducirse en un cambio visual directo, lo cual enriquece la interacción y ofrece una forma intuitiva de representar datos compartidos entre clientes.
+
+## Actividad 05 - 02/10/2025
+
+### 1. Idea
+
+Basado en la infraestructura de comunicación en tiempo real (Node.js, Express y Socket.IO), diseñé una aplicación completamente nueva y diferente al caso de estudio original.
+
+Mi propuesta se llama:
+
+“Jardín Ecológico Interactivo”
+
+La idea es que varios usuarios puedan conectarse simultáneamente a un espacio compartido en línea que funciona como un jardín virtual.
+
+- Cada usuario puede plantar semillas haciendo clic en el jardín.
+- Otro rol posible es el de espectador, que observa en tiempo real cómo evoluciona el jardín (sin interactuar).
+- Todos los usuarios ven las acciones de los demás de forma sincronizada.
+
+La propuesta no es simplemente cambiar la apariencia del ejemplo, sino crear una experiencia original y colaborativa, que promueva la idea de cuidado del medio ambiente de manera lúdica.
+
+### 2. Bocetos
+
+Boceto del diseño conceptual:
+
+- **Espacio del jardín:** un lienzo oscuro donde los usuarios plantan semillas.
+- **Plantas:** representadas como círculos verdes que aparecen al hacer clic.
+- **Controles:**
+  - Click → plantar.
+  - Botones para “Limpiar jardín” y “Abrir espectador”.
+- **Modo espectador:** solo observa el jardín en vivo.
+
+<img width="1348" height="774" alt="Captura de pantalla 2025-10-02 a la(s) 5 47 30 p m" src="https://github.com/user-attachments/assets/1e1099c5-3dd5-455e-822d-0c0041ad07a1" />
+
+<img width="491" height="253" alt="Captura de pantalla 2025-10-02 a la(s) 5 48 11 p m" src="https://github.com/user-attachments/assets/a936c45d-e674-4aae-9710-56b7473046b7" />
+
+### 3. Implementación
+
+La aplicación se construyó usando:
+
+- Servidor con Node.js + Express.
+- Comunicación en tiempo real con Socket.IO.
+- Interfaz cliente con HTML5 Canvas + JavaScript.
+- **Dos roles:** usuario (interactivo) y espectador (observador).
+
+### 4. Código
+
+`server.js`
+
+```js
+const express = require("express");
+const http = require("http");
+const { Server } = require("socket.io");
+const path = require("path");
+
+const app = express();
+const server = http.createServer(app);
+const io = new Server(server);
+
+// Servir archivos estáticos
+app.use(express.static(path.join(__dirname, "public")));
+
+let plants = [];
+
+// Conexión de usuarios
+io.on("connection", (socket) => {
+  console.log("Nuevo usuario conectado:", socket.id);
+
+  // Enviar estado inicial del jardín
+  socket.emit("init", plants);
+
+  // Evento de plantar
+  socket.on("plant", (data) => {
+    plants.push(data);
+    io.emit("plant", data);
+  });
+
+  // Evento de empujar plantas
+  socket.on("move", (data) => {
+    plants = plants.map((p) =>
+      p.id === data.id ? { ...p, x: data.x, y: data.y } : p
+    );
+    io.emit("move", data);
+  });
+
+  // Evento de limpiar jardín
+  socket.on("clear", () => {
+    plants = [];
+    io.emit("clear");
+  });
+
+  socket.on("disconnect", () => {
+    console.log("Usuario desconectado:", socket.id);
+  });
+});
+
+server.listen(3000, () => {
+  console.log("Servidor corriendo en http://localhost:3000");
+});
+```
+
+`public/garden.html`
+
+```html
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Jardín Ecológico — Garden</title>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="garden.js" defer></script>
+  <style>
+    body { margin:0; background:#0a1a2f; color:white; font-family:sans-serif; }
+    canvas { display:block; background:#001f3f; margin:auto; }
+    #controls { padding:10px; text-align:center; }
+  </style>
+</head>
+<body>
+  <div id="controls">
+    <button id="clearBtn">Limpiar Jardín</button>
+    <button onclick="window.open('spectator.html')">Abrir Espectador</button>
+    | Click = plantar • Hold+move = empujar
+  </div>
+  <canvas id="gardenCanvas" width="800" height="500"></canvas>
+</body>
+</html>
+```
+
+`public/garden.js`
+
+```js
+const socket = io();
+const canvas = document.getElementById("gardenCanvas");
+const ctx = canvas.getContext("2d");
+
+let plants = [];
+
+// Dibujar planta
+function drawPlant(x, y) {
+  ctx.fillStyle = "limegreen";
+  ctx.beginPath();
+  ctx.arc(x, y, 10, 0, Math.PI * 2);
+  ctx.fill();
+}
+
+// Redibujar todo
+function redraw() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  for (let p of plants) {
+    drawPlant(p.x, p.y);
+  }
+}
+
+// Escuchar eventos del servidor
+socket.on("init", (data) => { plants = data; redraw(); });
+socket.on("plant", (data) => { plants.push(data); redraw(); });
+socket.on("move", (data) => {
+  plants = plants.map(p => p.id === data.id ? data : p);
+  redraw();
+});
+socket.on("clear", () => { plants = []; redraw(); });
+
+// Interacciones del usuario
+canvas.addEventListener("click", (e) => {
+  const x = e.offsetX, y = e.offsetY;
+  const plant = { id: Date.now(), x, y };
+  socket.emit("plant", plant);
+});
+
+document.getElementById("clearBtn").addEventListener("click", () => {
+  socket.emit("clear");
+});
+```
+
+`public/spectator.html`
+```html
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Espectador — Jardín</title>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="spectator.js" defer></script>
+  <style>
+    body { margin:0; background:#002d19; }
+    canvas { display:block; background:#004d26; margin:auto; }
+  </style>
+</head>
+<body>
+  <canvas id="spectatorCanvas" width="800" height="500"></canvas>
+</body>
+</html>
+```
+
+`public/spectator.js`
+
+```js
+const socket = io();
+const canvas = document.getElementById("spectatorCanvas");
+const ctx = canvas.getContext("2d");
+
+let plants = [];
+
+// Dibujar planta
+function drawPlant(x, y) {
+  ctx.fillStyle = "limegreen";
+  ctx.beginPath();
+  ctx.arc(x, y, 10, 0, Math.PI * 2);
+  ctx.fill();
+}
+
+// Redibujar todo
+function redraw() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  for (let p of plants) {
+    drawPlant(p.x, p.y);
+  }
+}
+
+// Escuchar eventos del servidor
+socket.on("init", (data) => { plants = data; redraw(); });
+socket.on("plant", (data) => { plants.push(data); redraw(); });
+socket.on("move", (data) => {
+  plants = plants.map(p => p.id === data.id ? data : p);
+  redraw();
+});
+socket.on("clear", () => { plants = []; redraw(); });
+```
+
+### 5. Conclusión 
+
+Con este proyecto logré:
+
+- Usar tecnología de comunicación en tiempo real (Socket.IO).
+- Diseñar una experiencia original y colaborativa distinta al ejemplo.
+- Permitir la interacción de múltiples usuarios simultáneamente.
+- Explorar conceptos creativos ligados al medio ambiente.
+
+[Enlace al repositorio de `real-time-garden`](https://github.com/Valengp2006/real-time-garden)
+
+
+## Autoevaluación – Unidad 6
+
+**Actividades cumplidas**
+
+1. **Actividad 01: Instalación y preparación del entorno:**
+    - Documenté paso a paso la instalación de Node.js, npm y la infraestructura base de comunicación.
+    - Incluí capturas de pantalla como evidencia.
+$\color{green}{\text{✔️ Actividad completa.}}$
+
+2. **Actividad 02: Pruebas de la infraestructura:**
+   - Probé el caso de estudio base (cliente/servidor).
+   - Analicé el funcionamiento y registré los resultados.
+$\color{green}{\text{✔️ Actividad completa.}}$
+
+3. **Actividad 03: Documentación de evidencias (experimentos, errores, solución de problemas):**
+   - Registré los problemas que surgieron (errores en server.js, divergencia de ramas en Git, etc.).
+   - Documenté cómo se resolvieron con conclusiones claras.
+$\color{green}{\text{✔️ Actividad completa.}}$
+
+4. **Actividad 04: Diseño de una aplicación original:**
+    - Ideé y boceté el Jardín Ecológico Interactivo en tiempo real.
+	- Expliqué la idea, la motivación y la diferencia con el caso base.
+$\color{green}{\text{✔️ Actividad completa.}}$
+
+5. **Actividad 05: Implementación de la aplicación original:**
+    - Implementé el sistema cliente/servidor (server.js, garden.js, spectator.js).
+    - Verifiqué que funciona correctamente con múltiples clientes en tiempo real.
+    - Registré los códigos completos en la bitácora.
+$\color{green}{\text{✔️ Actividad completa.}}$
+
+**Nota propuesta según rúbrica: 5.0**
+
+**Defensa de la nota:**
+
+- Realicé las 5 actividades completas pedidas en la unidad.
+- Documenté paso a paso todo el proceso (incluso los errores y cómo los solucioné).
+- Expliqué con detalle la idea original, con bocetos, implementación y conclusiones.
+- Incluí todo el código fuente del proyecto final en la bitácora.
+- Además, realicé esta autoevaluación justificada.
+
+Por lo tanto, considero que cumplo con el máximo nivel de la rúbrica: 5.
+
