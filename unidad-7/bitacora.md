@@ -127,3 +127,68 @@ Durante la ejecución:
 **Dev Tunnels** permite convertir un servidor local en uno accesible globalmente sin exponer la IP real del computador.
 En conjunto con los **eventos táctiles de p5.js**, posibilita una interacción fluida y segura entre dispositivos, demostrando cómo se puede conectar hardware y software en red para experiencias interactivas multiplataforma.
 
+## Actividad 03
+
+### Función principal de `express.static('public')`
+
+La línea `app.use(express.static('public'));` le indica al servidor que todos los archivos dentro de la carpeta **public** (por ejemplo, HTML, CSS, JavaScript o imágenes) se sirvan directamente al navegador cuando un cliente accede al servidor.
+Esto evita tener que definir manualmente rutas con `app.get('/ruta', ...)`, como se hacía en la Unidad 6, donde cada recurso debía declararse explícitamente.
+
+**En resumen:**
+
+- `express.static('public')` → publica automáticamente todos los archivos estáticos dentro de la carpeta *public*.
+- `app.get('/ruta', …)` → sirve contenido solo para una ruta específica definida manualmente.
+
+
+### Flujo de un mensaje táctil entre cliente móvil, servidor y escritorio
+
+1. **Evento que lo envía desde el móvil:**
+   
+   En el cliente móvil, un evento táctil (como `touchmove` o `touchstart`) genera un mensaje que se envía al servidor usando `socket.emit('message', datos)`.
+
+3. **Evento que lo recibe el servidor:**
+   
+   En el servidor, el código
+
+<img width="379" height="107" alt="Captura de pantalla 2025-10-10 150607" src="https://github.com/user-attachments/assets/6d85235a-7ff7-4ba0-9289-eee6156883b5" />
+
+   escucha el evento `'message'` y muestra en consola el contenido recibido.
+
+3. **Qué hace el servidor con él:**
+   
+   El servidor no modifica el mensaje. Solo **lo retransmite** (repite) a todos los demás clientes conectados, excepto al que lo envió originalmente.
+
+5. **Evento que lo envía el servidor al escritorio:**
+   
+   La línea `socket.broadcast.emit('message', message)` reenvía el mensaje a los demás clientes, que en este caso incluirían al cliente de escritorio.
+
+7. **Por qué se usa `socket.broadcast.emit`:**
+   
+   Se utiliza `socket.broadcast.emit` para evitar que el mismo cliente que envió el mensaje lo reciba de nuevo.
+   Si se usara `io.emit`, el mensaje sería enviado a **todos los clientes**, incluyendo el emisor.
+   Si se usara `socket.emit`, **solo el emisor** lo recibiría.
+
+### Caso con varios clientes conectados
+
+Si se conectan **dos computadores de escritorio y un móvil** al mismo servidor:
+
+- Cuando el usuario mueve el dedo en el móvil, este envía el mensaje al servidor.
+- El servidor lo recibe y lo **retransmite** con `socket.broadcast.emit`.
+- El resultado: **los dos computadores de escritorio** recibirán el mensaje.
+  
+![Grabación de pantalla 2025-10-10 151020](https://github.com/user-attachments/assets/59e91b1a-90a2-4ed4-aee2-61242b88984a)
+
+![WhatsApp Video 2025-10-10 at 3 10 57 PM](https://github.com/user-attachments/assets/0d6c79a7-0a6d-4e73-b34b-9be04fb38dfe)
+
+
+### Información útil de los `console.log` en el servidor
+
+Los mensajes en consola sirven para monitorear en tiempo real:
+
+- Cuando un cliente se conecta o se desconecta (`New client connected`, `Client disconnected`).
+- Qué mensajes se están recibiendo y retransmitiendo (`Received message => ...`).
+- Confirmar que el servidor está activo y escuchando en el puerto correcto (`Server is listening on http://localhost:3000`).
+
+Estos registros facilitan la depuración y permiten verificar que el flujo de comunicación entre clientes y servidor funciona correctamente.
+
+
