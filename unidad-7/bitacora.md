@@ -90,7 +90,7 @@ Sin embargo, el celular no puede conectarse a esa dirección, ya que “localhos
 Para resolver esto, se utiliza **Dev Tunnels**, que crea una **URL pública temporal** (por ejemplo: `https://tulink.use2.devtunnels.ms/`) que actúa como un **intermediario seguro** entre Internet y el servidor local.
 Este túnel redirige todo el tráfico que llega desde esa URL pública hasta el puerto 3000 del computador, permitiendo que el celular acceda al servidor local sin necesidad de estar en la misma red Wi-Fi.
 
-### Función `touchMoved()` y el uso del threshold
+### Función `touchMoved()` y el uso del `threshold`
 
 En el archivo `mobile/sketch.js`, la función `touchMoved()` se ejecuta continuamente cada vez que el usuario **toca y arrastra el dedo sobre la pantalla**.
 Dentro de ella, se envían las coordenadas del toque (`mouseX`, `mouseY`) al servidor, que luego las reenvía a la página del escritorio para mover el círculo en tiempo real.
@@ -126,3 +126,4 @@ Durante la ejecución:
 
 **Dev Tunnels** permite convertir un servidor local en uno accesible globalmente sin exponer la IP real del computador.
 En conjunto con los **eventos táctiles de p5.js**, posibilita una interacción fluida y segura entre dispositivos, demostrando cómo se puede conectar hardware y software en red para experiencias interactivas multiplataforma.
+
