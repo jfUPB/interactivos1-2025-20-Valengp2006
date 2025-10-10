@@ -78,7 +78,6 @@
   
   Sí. El círculo se movía fluidamente de acuerdo con los movimientos táctiles en el celular. No se detectó latencia significativa.
 
-
-
+## Actividad 02 - 10/10/2025
 
 
