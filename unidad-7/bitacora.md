@@ -191,4 +191,60 @@ Los mensajes en consola sirven para monitorear en tiempo real:
 
 Estos registros facilitan la depuración y permiten verificar que el flujo de comunicación entre clientes y servidor funciona correctamente.
 
+## Actividad 04 - 17/10/2025
+
+### Flujo de comunicación
+
+**1.Evento en el móvil:**
+
+- Cuando el usuario toca y mueve el dedo sobre la pantalla, la función touchMoved() del archivo mobile/sketch.js detecta el movimiento.
+- Si el cambio en la posición supera el umbral (threshold = 5), se genera un objeto touchData con las coordenadas (x, y) y se envía al servidor con socket.emit('message', touchData).
+  
+**2.	Servidor (server.js):**
+
+- El servidor escucha el evento 'message' desde cualquier cliente conectado.
+- Al recibir los datos, usa socket.broadcast.emit('message', message) para reenviarlos a todos los demás clientes, excepto al que los envió (en este caso, al cliente de escritorio).
+
+**3.	Cliente de escritorio:**
+
+- Recibe el mensaje mediante socket.on('message', (data) => { ... }).
+- Si el mensaje tiene data.type === 'touch', actualiza las variables circleX y circleY.
+- En el ciclo draw(), se redibuja el círculo rojo en la nueva posición.
+
+### Diagrama del flujo de datos
+
+ ┌────────────────────┐           ┌────────────────────┐           ┌──────────────────────┐
+ │  Cliente Móvil     │           │     Servidor       │           │  Cliente Escritorio  │
+ │  (mobile/sketch.js)│           │   (server.js)      │           │ (desktop/sketch.js)  │
+ └────────┬───────────┘           └────────┬───────────┘           └────────┬─────────────┘
+          │                                 │                                │
+          │ touchMoved() detecta movimiento │                                │
+          │ ───────────────────────────────>│                                │
+          │  socket.emit('message', {x,y})  │                                │
+          │                                 │                                │
+          │                                 │ socket.broadcast.emit('message', {x,y})
+          │                                 │───────────────────────────────>│
+          │                                 │                                │
+          │                                 │                                │ socket.on('message')
+          │                                 │                                │ circleX=circleY={x,y}
+          │                                 │                                │
+          ▼                                 ▼                                ▼
+     Envío coordenadas               Reenvío al resto             Redibuja el círculo
+
+
+
+### Ejemplo de flujo de coordenadas
+
+- El usuario toca en el móvil en (x: 120, y: 300).
+- El móvil envía: { type: 'touch', x: 120, y: 300 }.
+- El servidor recibe: Received message => { type: 'touch', x: 120, y: 300 }.
+- El servidor retransmite el mensaje al escritorio.
+- El escritorio actualiza el círculo a (120, 300) y lo dibuja en tiempo real.
+
+### Conclusión
+
+- El sistema implementa un flujo cliente-servidor-cliente eficiente usando Socket.IO.
+- El cliente móvil actúa como fuente de eventos, el servidor como repetidor y el cliente de escritorio como visualizador.
+- Gracias a este modelo, se logra una sincronización en tiempo real entre dispositivos distintos sin necesidad de una red local compartida.
+
 
