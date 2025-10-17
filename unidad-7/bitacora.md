@@ -247,4 +247,296 @@ Estos registros facilitan la depuración y permiten verificar que el flujo de co
 - El cliente móvil actúa como fuente de eventos, el servidor como repetidor y el cliente de escritorio como visualizador.
 - Gracias a este modelo, se logra una sincronización en tiempo real entre dispositivos distintos sin necesidad de una red local compartida.
 
+## Actividad 05
+
+### Concepto de diseño
+
+El tema elegido fue The Phantom of the Opera, caracterizado por su atmósfera teatral y contrastes entre lo oscuro y lo luminoso.
+Para acompañar la música, se diseñó un controlador táctil tipo Launchpad (4x4) que permite activar diferentes visuales y efectos al ritmo de la canción.
+
+**Controlador (móvil):**
+
+- Simula un launchpad con 16 botones dispuestos en una cuadrícula 4x4.
+- Cada toque envía una señal al servidor, la cual:
+   - Se refleja visualmente en el botón presionado (iluminación temporal).
+   - Es transmitida al cliente de escritorio.
+**Visualizador (desktop):**
+
+- Muestra un fondo animado con ondas sincronizadas al audio de The Phantom of the Opera (archivo MP3 local).
+- Cada toque recibido desde el móvil produce un cambio visual: ondas de color, pulsos de luz y patrones que reaccionan al sonido.
+
+**Arquitectura del sistema**
+
+1. **Servidor Node.js (server.js)**
+
+   - Usa express para servir los archivos estáticos.
+   - Implementa socket.io para enviar y recibir eventos en tiempo real.
+   - Escucha las conexiones desde ambos clientes (móvil y escritorio).
+   - Reenvía las señales del controlador al visualizador.
+     
+2.	**Cliente móvil (mobile/index.html, mobile/sketch.js)**
+   
+   - Dibuja una cuadrícula 4x4 de botones con p5.js.
+   - Detecta eventos táctiles con touchStarted().
+   - Envía mensajes por socket.emit('padPress', { row, col }).
+   - Añade retroalimentación visual (efecto de iluminación del botón).
+     
+3.	**Cliente de escritorio (desktop/index.html, desktop/sketch.js)**
+
+  	- Carga y reproduce el tema musical (phantom_theme.mp3).
+   - Usa p5.FFT() para analizar el sonido y dibujar ondas sincronizadas.
+   - Escucha los mensajes del móvil con socket.on('padPress').
+   - Reacciona visualmente a cada toque con animaciones o cambios de color.
+
+**Funcionamiento del Touchpad**
+
+El touchpad del móvil se implementa como una cuadrícula de botones dibujados con p5.js.
+Cada botón detecta si el punto táctil (mouseX, mouseY o touches[]) cae dentro de sus límites.
+Cuando se detecta un toque:
+	1.	Se calcula la posición (fila, columna) del botón.
+	2.	Se envía un evento por Socket.io al servidor con esa información.
+	3.	Se ilumina brevemente el botón presionado (retroalimentación visual).
+	4.	El servidor retransmite el evento al cliente de escritorio.
+	5.	El visualizador de escritorio reacciona al toque con efectos sincronizados al sonido.
+
+### Archivos principales
+
+`server.js`
+```js
+const express = require('express');
+const http = require('http');
+const socketIO = require('socket.io');
+
+const app = express();
+const server = http.createServer(app);
+const io = socketIO(server);
+const port = 3000;
+
+app.use(express.static('public'));
+
+io.on('connection', (socket) => {
+    console.log('New client connected');
+
+    socket.on('padPressed', (data) => {
+        console.log('Pad pressed:', data);
+        io.emit('padPressed', data);
+    });
+
+    socket.on('disconnect', () => {
+        console.log('Client disconnected');
+    });
+});
+
+server.listen(port, () => {
+    console.log(`Server running on http://localhost:${port}`);
+});
+```
+`mobile/index.html`
+```js
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.0/lib/p5.min.js"></script>
+    <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+    <script src="sketch.js"></script>
+    <title>Launchpad Controller</title>
+</head>
+<body></body>
+</html>
+```
+`mobile/sketch.js`
+```js
+let socket;
+const cols = 4;
+const rows = 4;
+let cellSize;
+let active = [];
+
+function setup() {
+  createCanvas(300, 400);
+  cellSize = width / cols;
+  socket = io();
+  socket.on("connect", () => console.log("Connected to server"));
+}
+
+function draw() {
+  background(10);
+  for (let i = 0; i < cols; i++) {
+    for (let j = 0; j < rows; j++) {
+      let idx = i + j * cols;
+      let x = i * cellSize;
+      let y = j * (height / rows);
+      let brightness = active[idx] ? active[idx] : 80;
+      fill(100 + i * 30, 100 + j * 40, brightness, 200);
+      stroke(50);
+      rect(x + 5, y + 5, cellSize - 10, height / rows - 10, 10);
+      if (active[idx] > 0) active[idx] -= 10;
+    }
+  }
+}
+
+function touchStarted() {
+  let i = floor(mouseX / cellSize);
+  let j = floor(mouseY / (height / rows));
+  if (i >= 0 && i < cols && j >= 0 && j < rows) {
+    let idx = i + j * cols;
+    active[idx] = 255;
+    socket.emit("message", { type: "button", button: idx });
+  }
+  return false;
+}
+```
+
+`desktop/index.html`
+```js
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.0/lib/p5.min.js"></script>
+    <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.0/lib/addons/p5.sound.min.js"></script>
+    <script src="sketch.js"></script>
+    <title>Phantom Visuals</title>
+</head>
+<body></body>
+</html>
+```
+`desktop/sketch.js`
+```js
+let socket;
+let song;
+let fft;
+let mode = 0;
+let effects = [];
+let pulse = 0;
+
+function preload() {
+  song = loadSound("assets/phantom_theme.mp3");
+}
+
+function setup() {
+  createCanvas(windowWidth, windowHeight);
+  fft = new p5.FFT();
+  socket = io();
+
+  socket.on("connect", () => console.log("Connected to server"));
+
+  // Escucha los mensajes del móvil
+  socket.on("message", (data) => {
+    if (data && data.type === "button") {
+      mode = data.button; // cambia el modo visual según el botón
+      pulse = 255;
+      createEffect(mode);
+    }
+  });
+
+  background(0);
+}
+
+function draw() {
+  background(0, 40);
+
+  // Visual principal sincronizada con la música
+  if (song.isPlaying()) {
+    let spectrum = fft.analyze();
+
+    if (mode % 4 === 0) drawWave(spectrum);
+    if (mode % 4 === 1) drawBars(spectrum);
+    if (mode % 4 === 2) drawCircular(spectrum);
+    if (mode % 4 === 3) drawParticles();
+  }
+
+  // Efecto de “golpe” visual
+  if (pulse > 0) {
+    fill(255, 255, 255, pulse);
+    rect(0, 0, width, height);
+    pulse -= 10;
+  }
+}
+
+// --- Diferentes visuales ---
+function drawWave(spectrum) {
+  noFill();
+  stroke(lerpColor(color(150, 0, 255), color(255, 0, 50), sin(frameCount * 0.01)));
+  strokeWeight(2);
+  beginShape();
+  for (let i = 0; i < spectrum.length; i++) {
+    let x = map(i, 0, spectrum.length, 0, width);
+    let y = map(spectrum[i], 0, 255, height / 2, 0);
+    vertex(x, y);
+  }
+  endShape();
+}
+
+function drawBars(spectrum) {
+  noStroke();
+  for (let i = 0; i < spectrum.length; i += 10) {
+    let amp = spectrum[i];
+    let y = map(amp, 0, 255, height, 0);
+    fill(255 - amp, amp, 150);
+    rect(i * (width / spectrum.length) * 10, y, width / 60, height - y);
+  }
+}
+
+function drawCircular(spectrum) {
+  noFill();
+  translate(width / 2, height / 2);
+  stroke(200, 100, 255);
+  strokeWeight(2);
+  beginShape();
+  for (let i = 0; i < spectrum.length; i += 5) {
+    let angle = map(i, 0, spectrum.length, 0, TWO_PI);
+    let rad = map(spectrum[i], 0, 255, 100, 400);
+    vertex(rad * cos(angle), rad * sin(angle));
+  }
+  endShape(CLOSE);
+  resetMatrix();
+}
+
+function drawParticles() {
+  for (let p of effects) {
+    fill(p.c);
+    noStroke();
+    ellipse(p.x, p.y, p.size);
+    p.x += p.vx;
+    p.y += p.vy;
+    p.life--;
+  }
+  effects = effects.filter(p => p.life > 0);
+}
+
+function createEffect(mode) {
+  if (mode % 4 === 3) {
+    for (let i = 0; i < 30; i++) {
+      effects.push({
+        x: random(width),
+        y: random(height),
+        vx: random(-3, 3),
+        vy: random(-3, 3),
+        size: random(5, 15),
+        c: color(random(100, 255), random(50, 200), random(100, 255)),
+        life: random(40, 80)
+      });
+    }
+  }
+}
+
+function mousePressed() {
+  if (!song.isPlaying()) song.play();
+}
+```
+### Resultado final
+
+Al ejecutar:
+
+- El servidor Node.js (node server.js).
+- Acceder desde el móvil a http://<IP_local>:3000/mobile.
+- Abrir el desktop en http://<IP_local>:3000/desktop.
+
+Cada toque en el launchpad del móvil ilumina el botón, envía la señal al servidor y genera una reacción visual sincronizada con la música en la aplicación de escritorio.
+
 
