@@ -24,9 +24,9 @@ El objetivo es crear una experiencia **multiplataforma sincronizada** entre disp
 
 1. [Video de Universo 360](https://www.youtube.com/watch?v=kMVV6YjaGM4)
 2. [Viaje 360 por el Sistema Solar](https://www.youtube.com/watch?v=xdURfh5OPjQ)
-3. Controlador de nave espacial:
+3. [Película *Interestelar*](https://www.netflix.com/co/title/70305903)
+4. Controlador de nave espacial:
 <img width="626" height="403" alt="image" src="https://github.com/user-attachments/assets/40c8ed55-bc59-409c-9457-0979b202a8c2" />
-4. [Película *Interestelar*](https://www.netflix.com/co/title/70305903)
 
 
 ### Concepto de interacción
@@ -105,3 +105,4 @@ Cada dispositivo funciona como un módulo dentro del ecosistema:
 
 Esta experiencia combina **interacción tangible y digital**, explorando cómo diferentes medios (hardware, touch y visual 3D) pueden integrarse en una narrativa emocional.
 A través del lenguaje visual y sonoro de *Interstellar*, el usuario experimenta el control de una nave espacial en un viaje simbólico que une **tecnología, música y emoción** en tiempo real.
+
