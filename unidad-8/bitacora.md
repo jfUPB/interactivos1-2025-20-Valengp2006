@@ -106,3 +106,176 @@ Cada dispositivo funciona como un módulo dentro del ecosistema:
 Esta experiencia combina **interacción tangible y digital**, explorando cómo diferentes medios (hardware, touch y visual 3D) pueden integrarse en una narrativa emocional.
 A través del lenguaje visual y sonoro de *Interstellar*, el usuario experimenta el control de una nave espacial en un viaje simbólico que une **tecnología, música y emoción** en tiempo real.
 
+
+Código desktop/index.html
+
+```html
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Simulación 3D Controlada por Micro:bit</title>
+
+  <!-- Three.js (asegúrate de usar la versión correcta) -->
+  <script src="https://cdn.jsdelivr.net/npm/three@0.152.0/build/three.min.js"></script>
+
+  <!-- Socket.IO (servida por tu servidor Node) -->
+  <script src="/socket.io/socket.io.js"></script>
+
+  <!-- Tu script principal -->
+  <script defer src="sketch.js"></script>
+
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      background-color: #000;
+      font-family: sans-serif;
+      color: white;
+    }
+
+    canvas {
+      display: block;
+    }
+
+    #status {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      font-size: 14px;
+      background: rgba(0,0,0,0.5);
+      padding: 8px 12px;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+<body>
+  <div id="status">Conectando con micro:bit...</div>
+</body>
+</html>
+```
+
+Código desktop/sketch.js
+```js
+// public/desktop/sketch.js
+const socket = io();
+
+let scene, camera, renderer, cube, light;
+
+const statusEl = document.getElementById('status');
+socket.on('connect', () => statusEl.textContent = '🟢 Conectado al servidor');
+socket.on('disconnect', () => statusEl.textContent = '🔴 Desconectado');
+
+function init() {
+  scene = new THREE.Scene();
+  camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+
+  renderer = new THREE.WebGLRenderer({ antialias: true });
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  document.body.appendChild(renderer.domElement);
+
+  const geometry = new THREE.BoxGeometry();
+  const material = new THREE.MeshStandardMaterial({ color: 0x0077ff });
+  cube = new THREE.Mesh(geometry, material);
+  scene.add(cube);
+
+  light = new THREE.PointLight(0xffffff, 1, 100);
+  light.position.set(5, 5, 5);
+  scene.add(light);
+
+  camera.position.z = 3;
+
+  animate();
+}
+
+function animate() {
+  requestAnimationFrame(animate);
+  renderer.render(scene, camera);
+}
+
+socket.on('microbit-data', (data) => {
+  // Acelerar con acelerómetro
+  cube.rotation.x = data.y / 500;
+  cube.rotation.y = data.x / 500;
+
+  // Botón A cambia color
+  if (data.a) cube.material.color.set(0xff0000);
+
+  // Botón B cambia color
+  if (data.b) cube.material.color.set(0x00ff00);
+
+  // Shake → reiniciar
+  if (data.shake) {
+    cube.rotation.x = 0;
+    cube.rotation.y = 0;
+    cube.material.color.set(0x0077ff);
+  }
+});
+
+init();
+```
+
+server.js
+```js
+// server.js
+const express = require('express');
+const http = require('http');
+const socketIO = require('socket.io');
+const { SerialPort } = require('serialport');
+const { ReadlineParser } = require('@serialport/parser-readline');
+
+const app = express();
+const server = http.createServer(app);
+const io = socketIO(server);
+const port = 3000;
+
+// Servir los archivos de la carpeta "public"
+app.use(express.static('public'));
+
+// --- CONFIGURACIÓN DEL PUERTO SERIAL ---
+const serialPort = new SerialPort({
+  path: 'COM13', // ⚠️ cambia este valor si tu micro:bit usa otro puerto
+  baudRate: 115200
+});
+
+const parser = serialPort.pipe(new ReadlineParser({ delimiter: '\n' }));
+
+parser.on('data', (data) => {
+  try {
+    const json = JSON.parse(data);
+    console.log('Microbit:', json);
+    io.emit('microbit-data', json);
+  } catch (e) {
+    console.error('Error parsing micro:bit data:', data);
+  }
+});
+
+io.on('connection', (socket) => {
+  console.log('Cliente conectado');
+
+  socket.on('disconnect', () => {
+    console.log('Cliente desconectado');
+  });
+});
+
+server.listen(port, () => {
+  console.log(`🌐 Servidor disponible en http://localhost:${port}`);
+});
+```
+
+micropython
+```py
+from microbit import *
+import json
+
+while True:
+    data = {
+        "x": accelerometer.get_x(),
+        "y": accelerometer.get_y(),
+        "a": button_a.is_pressed(),
+        "b": button_b.is_pressed(),
+        "shake": accelerometer.was_gesture("shake")
+    }
+    print(json.dumps(data))
+    sleep(200)
+```
