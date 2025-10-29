@@ -106,8 +106,9 @@ Cada dispositivo funciona como un módulo dentro del ecosistema:
 Esta experiencia combina **interacción tangible y digital**, explorando cómo diferentes medios (hardware, touch y visual 3D) pueden integrarse en una narrativa emocional.
 A través del lenguaje visual y sonoro de *Interstellar*, el usuario experimenta el control de una nave espacial en un viaje simbólico que une **tecnología, música y emoción** en tiempo real.
 
+# Actividad 02 - 24/10/2025
 
-Código desktop/index.html
+`Código desktop/index.html`
 
 ```html
 <!DOCTYPE html>
@@ -155,7 +156,7 @@ Código desktop/index.html
 </html>
 ```
 
-Código desktop/sketch.js
+`Código desktop/sketch.js`
 ```js
 // public/desktop/sketch.js
 const socket = io();
@@ -215,7 +216,7 @@ socket.on('microbit-data', (data) => {
 init();
 ```
 
-server.js
+`server.js`
 ```js
 // server.js
 const express = require('express');
@@ -234,19 +235,21 @@ app.use(express.static('public'));
 
 // --- CONFIGURACIÓN DEL PUERTO SERIAL ---
 const serialPort = new SerialPort({
-  path: 'COM13', // ⚠️ cambia este valor si tu micro:bit usa otro puerto
+  path: 'COM14', 
   baudRate: 115200
 });
 
 const parser = serialPort.pipe(new ReadlineParser({ delimiter: '\n' }));
 
 parser.on('data', (data) => {
-  try {
-    const json = JSON.parse(data);
+  const parts = data.trim().split(',');
+  if (parts.length === 5) {
+    const [x, y, a, b, shake] = parts.map(Number);
+    const json = { x, y, a: Boolean(a), b: Boolean(b), shake: Boolean(shake) };
     console.log('Microbit:', json);
     io.emit('microbit-data', json);
-  } catch (e) {
-    console.error('Error parsing micro:bit data:', data);
+  } else {
+    console.error('Formato no válido:', data);
   }
 });
 
@@ -263,19 +266,20 @@ server.listen(port, () => {
 });
 ```
 
-micropython
+`micropython`
 ```py
 from microbit import *
-import json
+import microbit
 
 while True:
-    data = {
-        "x": accelerometer.get_x(),
-        "y": accelerometer.get_y(),
-        "a": button_a.is_pressed(),
-        "b": button_b.is_pressed(),
-        "shake": accelerometer.was_gesture("shake")
-    }
-    print(json.dumps(data))
-    sleep(200)
+    x = accelerometer.get_x()
+    y = accelerometer.get_y()
+    a = button_a.is_pressed()
+    b = button_b.is_pressed()
+    shake = accelerometer.was_gesture('shake')
+
+    # Enviar en formato: x,y,a,b,shake
+    print("{},{},{},{},{}".format(x, y, int(a), int(b), int(shake)))
+    sleep(100)
 ```
+
