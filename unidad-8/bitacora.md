@@ -344,4 +344,17 @@ while True:
     print("{},{},{},{},{}".format(tiltX, tiltY, a, b, shake))
 ```
 
+## Autoevaluación:
 
+Durante el desarrollo de esta unidad logré integrar distintos componentes de hardware y software en una misma experiencia interactiva. La Actividad 1 me permitió consolidar el concepto y diseñar un flujo coherente entre los tres dispositivos (micro:bit, celular y computador), planteando una narrativa inmersiva basada en el tema musical de Interstellar.
+
+En la Actividad 2, implementé los códigos correspondientes a cada módulo, aplicando conocimientos de Three.js, p5.js, Socket.IO y MicroPython. Aunque los scripts y la estructura general están completos, la integración final entre dispositivos no alcanzó un funcionamiento pleno, principalmente por dificultades de comunicación serial entre el micro:bit y el servidor.
+
+Considero que cumplí con los objetivos de diseño, lógica y programación planteados, demostrando comprensión del flujo de datos entre hardware y visualización 3D, pero aún puedo mejorar la depuración y pruebas de integración en tiempo real.
+
+Autoevaluación:
+→ Nivel de cumplimiento: 4/5
+→ Nivel de aprendizaje alcanzado: 5/5
+→ Observación: necesito fortalecer la parte de comunicación entre dispositivos para lograr un ecosistema completamente funcional.
+
+Por tanto, considero como nota final 4.
