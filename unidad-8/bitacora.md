@@ -106,7 +106,103 @@ Esta experiencia combina **interacción tangible y digital**, explorando cómo d
 A través del lenguaje visual y sonoro de *Interstellar*, el usuario experimenta el control de una nave espacial en un viaje simbólico que une **tecnología, música y emoción** en tiempo real.
 
 # Actividad 02 - 24/10/2025
+## Documentación del  proceso
 
+1. **Prompt:**
+
+> “Este es el objetivo final: Tema musical ‘Main Theme – Interstellar’. Quiero que la experiencia recree el sentimiento de inmensidad del universo con sonido, luz y movimiento en tiempo real.”
+
+**Respuesta:**
+
+Me ayudó a estructurar el **concepto general**, definiendo:
+
+- La narrativa emocional (“el usuario es el piloto de una nave interestelar”).
+- Los tres dispositivos que participan:
+
+  - **Micro:bit** → control físico.
+  - **Celular (p5.js)** → panel táctil.
+  - **Computador (Three.js)** → entorno inmersivo 3D.
+- Y el **flujo de comunicación** entre ellos mediante **Socket.IO** y **Node.js**.
+
+2. **Prompt:**
+
+> “¿Podrías recordarme la estructura del proyecto? No recuerdo dónde van los index y los sketch.”
+
+**Respuesta:**
+
+me dió la estructura recomendada para mantener el orden del proyecto:
+
+```
+/sfiSocketioDesktopMobile
+│
+├── server.js
+├── package.json
+└── /public
+    ├── /desktop
+    │   ├── index.html
+    │   └── sketch.js
+    ├── /mobile
+    │   ├── index.html
+    │   └── sketch.js
+```
+
+Explicando que:
+
+- `server.js` corre el servidor Node.js con Socket.IO.
+- `public/desktop` aloja el entorno 3D (Three.js).
+- `public/mobile` contiene la app p5.js del panel táctil.
+- El micro:bit se comunica por **serial (UART)** con el servidor.
+  
+3. **Prompt:**
+
+> “Podrías darme el código para el visual de Three.js?”
+
+**Respuesta:**
+Me dió un código completo con:
+
+- Escena, cámara y renderer configurados.
+- Generación de estrellas con `BufferGeometry`.
+- Luz central y rotación suave del entorno.
+- Colores de fondo cambiando según `hsl()` para simular atmósferas.
+- Recepción de datos en tiempo real desde Socket.IO (`velocidad`, `brillo`, `colorCielo`, etc.).
+
+4. **Prompt:**
+
+> “Sí, incluye también el código de la app móvil.”
+
+**Respuesta:**
+
+Generó el **panel táctil en p5.js**, con:
+
+- Palancas laterales (velocidad y brillo).
+- Botón central de salto interestelar.
+- Comunicación con el servidor mediante `socket.emit("mobile-data", {...})`.
+
+5. **Prompt:**
+
+> “Me sale un error: SyntaxError: Cannot use import statement outside a module.”
+
+**Respuesta:**
+
+Me explicó que Node estaba esperando módulos **CommonJS**, y te mostré dos soluciones:
+
+1. Cambiar `import` por `require()` (lo que hiciste).
+2. O definir `"type": "module"` en el `package.json`.
+
+Confirmó que la versión final del servidor debía usar `require` como en la bitácora.
+
+**Producto final logrado:**
+
+- Bitácora con documentación completa, referencias, concepto, interacción y diagramas.
+- Proyecto estructurado correctamente con:
+  - Visual 3D funcional (Three.js).
+  - Panel móvil interactivo (p5.js).
+  - Micro:bit enviando datos reales por puerto serial.
+  - Servidor Node.js con puente de comunicación Socket.IO.
+
+**Limitación:** La integración total entre los tres módulos no alcanzó a funcionar completamente en tiempo real, aunque el código está implementado de forma correcta.
+
+## Códigos implementados
 ### `Código desktop/index.html`
 
 ```html
@@ -358,3 +454,4 @@ Autoevaluación:
 → Observación: necesito fortalecer la parte de comunicación entre dispositivos para lograr un ecosistema completamente funcional.
 
 Por tanto, considero como nota final 4.
+
