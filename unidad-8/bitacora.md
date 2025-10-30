@@ -2,7 +2,6 @@
 
 ## Actividad 01 - 22/10/2025
 
-
 ### Tema musical
 
 **“Main Theme – Interstelar” – Hans Zimmer**
@@ -108,7 +107,7 @@ A través del lenguaje visual y sonoro de *Interstellar*, el usuario experimenta
 
 # Actividad 02 - 24/10/2025
 
-`Código desktop/index.html`
+### `Código desktop/index.html`
 
 ```html
 <!DOCTYPE html>
@@ -117,169 +116,232 @@ A través del lenguaje visual y sonoro de *Interstellar*, el usuario experimenta
   <meta charset="UTF-8" />
   <title>Simulación 3D Controlada por Micro:bit</title>
 
-  <!-- Three.js (asegúrate de usar la versión correcta) -->
+  <!-- Librerías -->
   <script src="https://cdn.jsdelivr.net/npm/three@0.152.0/build/three.min.js"></script>
-
-  <!-- Socket.IO (servida por tu servidor Node) -->
-  <script src="/socket.io/socket.io.js"></script>
-
-  <!-- Tu script principal -->
   <script defer src="sketch.js"></script>
 
   <style>
-    body {
-      margin: 0;
-      overflow: hidden;
-      background-color: #000;
-      font-family: sans-serif;
-      color: white;
-    }
-
-    canvas {
-      display: block;
-    }
-
-    #status {
+    body { margin: 0; overflow: hidden; background: #000; }
+    canvas { display: block; }
+    button {
       position: absolute;
-      top: 10px;
-      left: 10px;
-      font-size: 14px;
-      background: rgba(0,0,0,0.5);
-      padding: 8px 12px;
+      top: 20px;
+      left: 20px;
+      padding: 10px 20px;
+      font-size: 16px;
       border-radius: 8px;
+      border: none;
+      background: #222;
+      color: #fff;
+      cursor: pointer;
     }
   </style>
 </head>
 <body>
-  <div id="status">Conectando con micro:bit...</div>
+  <button id="connectBtn"> Conectar micro:bit</button>
 </body>
 </html>
 ```
 
-`Código desktop/sketch.js`
+### `Código desktop/sketch.js`
 ```js
-// public/desktop/sketch.js
-const socket = io();
+// public/desktop.js
+let scene, camera, renderer, socket;
+let starsMesh;
+let velocidad = 0;
+let brillo = 0.5;
+let colorCielo = 0;
+let salto = false;
 
-let scene, camera, renderer, cube, light;
-
-const statusEl = document.getElementById('status');
-socket.on('connect', () => statusEl.textContent = '🟢 Conectado al servidor');
-socket.on('disconnect', () => statusEl.textContent = '🔴 Desconectado');
+init();
+animate();
 
 function init() {
+  socket = io();
+
   scene = new THREE.Scene();
-  camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+  camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 2000);
+  camera.position.z = 1;
 
   renderer = new THREE.WebGLRenderer({ antialias: true });
   renderer.setSize(window.innerWidth, window.innerHeight);
   document.body.appendChild(renderer.domElement);
 
-  const geometry = new THREE.BoxGeometry();
-  const material = new THREE.MeshStandardMaterial({ color: 0x0077ff });
-  cube = new THREE.Mesh(geometry, material);
-  scene.add(cube);
+  // Fondo de estrellas
+  const geometry = new THREE.BufferGeometry();
+  const vertices = [];
+  for (let i = 0; i < 8000; i++) {
+    vertices.push((Math.random() - 0.5) * 2000);
+    vertices.push((Math.random() - 0.5) * 2000);
+    vertices.push((Math.random() - 0.5) * 2000);
+  }
+  geometry.setAttribute("position", new THREE.Float32BufferAttribute(vertices, 3));
+  const material = new THREE.PointsMaterial({ color: 0xffffff, size: 1 });
+  starsMesh = new THREE.Points(geometry, material);
+  scene.add(starsMesh);
 
-  light = new THREE.PointLight(0xffffff, 1, 100);
-  light.position.set(5, 5, 5);
+  // Luz central
+  const light = new THREE.PointLight(0xffffff, 1);
+  light.position.set(0, 0, 0);
   scene.add(light);
 
-  camera.position.z = 3;
+  // SOCKET EVENTOS
+  socket.on("mobile-data", (data) => {
+    velocidad = data.velocidad;
+    brillo = data.brillo;
+    colorCielo = data.colorCielo;
+    salto = data.salto;
+  });
 
-  animate();
+  socket.on("microbit-data", (data) => {
+    camera.rotation.x += data.tiltX * 0.05;
+    camera.rotation.y += data.tiltY * 0.05;
+
+    if (data.botonA === 1) {
+      console.log("Motores encendidos");
+    }
+    if (data.botonB === 1) {
+      brillo = Math.min(1, brillo + 0.1);
+    }
+    if (data.shake === 1) {
+      console.log("Reinicio de simulación");
+      camera.rotation.set(0, 0, 0);
+    }
+  });
 }
 
 function animate() {
   requestAnimationFrame(animate);
+  scene.rotation.y += 0.0005 + velocidad * 0.005;
+  renderer.setClearColor(new THREE.Color(`hsl(${colorCielo * 360}, 50%, ${brillo * 50 + 10}%)`));
   renderer.render(scene, camera);
 }
-
-socket.on('microbit-data', (data) => {
-  // Acelerar con acelerómetro
-  cube.rotation.x = data.y / 500;
-  cube.rotation.y = data.x / 500;
-
-  // Botón A cambia color
-  if (data.a) cube.material.color.set(0xff0000);
-
-  // Botón B cambia color
-  if (data.b) cube.material.color.set(0x00ff00);
-
-  // Shake → reiniciar
-  if (data.shake) {
-    cube.rotation.x = 0;
-    cube.rotation.y = 0;
-    cube.material.color.set(0x0077ff);
-  }
-});
-
-init();
 ```
 
-`server.js`
+### `Codigo mobile/index.html`
+
+```html
+<!-- public/mobile.html -->
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Panel de Vuelo – Interstellar</title>
+  <script src="https://cdn.jsdelivr.net/npm/p5/lib/p5.min.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="mobile.js"></script>
+  <style>
+    body { margin: 0; background: black; overflow: hidden; }
+  </style>
+</head>
+<body></body>
+</html>
+```
+### `Código mobile/sketch.js`
+```js
+// public/mobile.js
+let socket;
+let velocidad = 0;
+let brillo = 0.5;
+let colorCielo = 0;
+let salto = false;
+
+function setup() {
+  createCanvas(windowWidth, windowHeight);
+  socket = io();
+
+  textAlign(CENTER, CENTER);
+  textSize(20);
+}
+
+function draw() {
+  background(10);
+  fill(255);
+  text("Panel de Vuelo – Interstellar", width / 2, 40);
+
+  // Palanca de velocidad
+  fill(100);
+  rect(width * 0.75, 100, 60, height * 0.6);
+  fill(200);
+  rect(width * 0.75, map(velocidad, 0, 1, height * 0.7, 100), 60, 20);
+
+  // Slider de brillo
+  fill(100);
+  rect(width * 0.25, 100, 60, height * 0.6);
+  fill(200);
+  rect(width * 0.25, map(brillo, 0, 1, height * 0.7, 100), 60, 20);
+
+  // Botón salto
+  fill(salto ? "red" : "darkred");
+  ellipse(width / 2, height * 0.85, 100);
+
+  socket.emit("mobile-data", { velocidad, brillo, colorCielo, salto });
+}
+
+function touchMoved() {
+  if (mouseX > width * 0.7) velocidad = constrain(map(mouseY, height * 0.7, 100, 0, 1), 0, 1);
+  if (mouseX < width * 0.3) brillo = constrain(map(mouseY, height * 0.7, 100, 0, 1), 0, 1);
+}
+
+function touchEnded() {
+  if (dist(mouseX, mouseY, width / 2, height * 0.85) < 50) salto = !salto;
+}
+```
+
+### `server.js`
+
 ```js
 // server.js
-const express = require('express');
-const http = require('http');
-const socketIO = require('socket.io');
-const { SerialPort } = require('serialport');
-const { ReadlineParser } = require('@serialport/parser-readline');
+const express = require("express");
+const http = require("http");
+const { Server } = require("socket.io");
+const SerialPort = require("serialport");
+const { ReadlineParser } = require("@serialport/parser-readline");
 
 const app = express();
 const server = http.createServer(app);
-const io = socketIO(server);
-const port = 3000;
+const io = new Server(server);
 
-// Servir los archivos de la carpeta "public"
-app.use(express.static('public'));
+app.use(express.static("public"));
 
-// --- CONFIGURACIÓN DEL PUERTO SERIAL ---
-const serialPort = new SerialPort({
-  path: 'COM14', 
-  baudRate: 115200
-});
+server.listen(3000, () => console.log("Servidor activo en http://localhost:3000"));
 
-const parser = serialPort.pipe(new ReadlineParser({ delimiter: '\n' }));
+// === MICRO:BIT SERIAL ===
+const port = new SerialPort({ path: "COM14", baudRate: 115200 }); //
+const parser = port.pipe(new ReadlineParser({ delimiter: "\n" }));
 
-parser.on('data', (data) => {
-  const parts = data.trim().split(',');
+parser.on("data", (line) => {
+  const parts = line.trim().split(",");
   if (parts.length === 5) {
-    const [x, y, a, b, shake] = parts.map(Number);
-    const json = { x, y, a: Boolean(a), b: Boolean(b), shake: Boolean(shake) };
-    console.log('Microbit:', json);
-    io.emit('microbit-data', json);
-  } else {
-    console.error('Formato no válido:', data);
+    const [tiltX, tiltY, botonA, botonB, shake] = parts.map(parseFloat);
+    io.emit("microbit-data", { tiltX, tiltY, botonA, botonB, shake });
   }
 });
 
-io.on('connection', (socket) => {
-  console.log('Cliente conectado');
+io.on("connection", (socket) => {
+  console.log(" Cliente conectado:", socket.id);
 
-  socket.on('disconnect', () => {
-    console.log('Cliente desconectado');
+  socket.on("mobile-data", (data) => {
+    io.emit("mobile-data", data);
   });
-});
 
-server.listen(port, () => {
-  console.log(`🌐 Servidor disponible en http://localhost:${port}`);
+  socket.on("disconnect", () => console.log("❌ Cliente desconectado"));
 });
 ```
 
-`micropython`
+### `micropython`
 ```py
 from microbit import *
-import microbit
 
 while True:
-    x = accelerometer.get_x()
-    y = accelerometer.get_y()
-    a = button_a.is_pressed()
-    b = button_b.is_pressed()
-    shake = accelerometer.was_gesture('shake')
+    tiltX = accelerometer.get_x() / 1024
+    tiltY = accelerometer.get_y() / 1024
+    a = 1 if button_a.is_pressed() else 0
+    b = 1 if button_b.is_pressed() else 0
+    shake = 1 if accelerometer.was_gesture("shake") else 0
 
-    # Enviar en formato: x,y,a,b,shake
-    print("{},{},{},{},{}".format(x, y, int(a), int(b), int(shake)))
-    sleep(100)
+    # Enviar como línea de texto simple
+    print("{},{},{},{},{}".format(tiltX, tiltY, a, b, shake))
 ```
+
 
