@@ -449,9 +449,11 @@ En la Actividad 2, implementé los códigos correspondientes a cada módulo, apl
 Considero que cumplí con los objetivos de diseño, lógica y programación planteados, demostrando comprensión del flujo de datos entre hardware y visualización 3D, pero aún puedo mejorar la depuración y pruebas de integración en tiempo real.
 
 Autoevaluación:
-→ Nivel de cumplimiento: 4/5
-→ Nivel de aprendizaje alcanzado: 5/5
-→ Observación: necesito fortalecer la parte de comunicación entre dispositivos para lograr un ecosistema completamente funcional.
+
+- Nivel de cumplimiento: 4/5
+- Nivel de aprendizaje alcanzado: 5/5
+- Observación: necesito fortalecer la parte de comunicación entre dispositivos para lograr un ecosistema completamente funcional.
 
 Por tanto, considero como nota final 4.
+
 
